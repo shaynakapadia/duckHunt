@@ -49,6 +49,7 @@ module lab8( input               CLOCK_50,
     logic Reset_h, Clk, is_ball;
     logic [7:0] keycode;
 	 logic [9:0] DrawX, DrawY;
+   logic [18:0] read_address;
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -59,26 +60,7 @@ module lab8( input               CLOCK_50,
     logic [15:0] hpi_data_in, hpi_data_out;
     logic hpi_r, hpi_w, hpi_cs, hpi_reset;
 
-    // Interface between NIOS II and EZ-OTG chip
-    hpi_io_intf hpi_io_inst(
-                            .Clk(Clk),
-                            .Reset(Reset_h),
-                            // signals connected to NIOS II
-                            .from_sw_address(hpi_addr),
-                            .from_sw_data_in(hpi_data_in),
-                            .from_sw_data_out(hpi_data_out),
-                            .from_sw_r(hpi_r),
-                            .from_sw_w(hpi_w),
-                            .from_sw_cs(hpi_cs),
-                            .from_sw_reset(hpi_reset),
-                            // signals connected to EZ-OTG chip
-                            .OTG_DATA(OTG_DATA),
-                            .OTG_ADDR(OTG_ADDR),
-                            .OTG_RD_N(OTG_RD_N),
-                            .OTG_WR_N(OTG_WR_N),
-                            .OTG_CS_N(OTG_CS_N),
-                            .OTG_RST_N(OTG_RST_N)
-    );
+
 
      // You need to make sure that the port names here match the ports in Qsys-generated codes.
      nios_system nios_system(
@@ -114,10 +96,10 @@ module lab8( input               CLOCK_50,
 		 .DrawX(DrawX), .DrawY(DrawY));
 
     // Which signal should be frame_clk?
-    ball ball_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-		.DrawY(DrawY), .is_ball(is_ball), .keycode(keycode));
+    duck duck_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
+		.DrawY(DrawY), .is_duck(is_duck), .read_address(read_address));
 
-    color_mapper color_instance(.is_ball(is_ball), .DrawX(DrawX), .DrawY(DrawY),
+    color_mapper color_instance(.is_duck(is_duck), .DrawX(DrawX), .DrawY(DrawY),
 	 .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
     // Display keycode on hex display
