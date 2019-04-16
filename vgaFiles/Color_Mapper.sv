@@ -28,7 +28,7 @@ module  color_mapper ( input              is_duck,
     assign VGA_R = Red;
     assign VGA_G = Green;
     assign VGA_B = Blue;
-
+    duckROM duckdown(.*, .read_address(), .data_Out());
     // Assign color based on is_ball signal
     always_comb
     begin
