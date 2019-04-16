@@ -3,7 +3,7 @@
  * Author: Rishi Thakkar
  *
  */
-//TREE
+//BACKGROUND
 module  frameRAM
 (
 		input [4:0] data_In,
@@ -18,7 +18,7 @@ logic [2:0] mem [0:399];
 
 initial
 begin
-	 $readmemh("sprite_bytes/tree.txt", mem);
+	 $readmemh("sprite_bytes/background.txt", mem);
 end
 
 
