@@ -17,13 +17,12 @@
 module  ball ( input         Clk,                // 50 MHz clock
                              Reset,              // Active-high reset signal
                              frame_clk,          // The clock indicating a new frame (~60Hz)
-					     input [7:0]	  keycode,
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_ball             // Whether current pixel belongs to ball or background
               );
 
-    parameter [9:0] Ball_X_Center = 10'd320;  // Center position on the X axis
-    parameter [9:0] Ball_Y_Center = 10'd240;  // Center position on the Y axis
+    parameter [9:0] Ball_X_Center = 10'd100;  // Center position on the X axis
+    parameter [9:0] Ball_Y_Center = 10'd100;  // Center position on the Y axis
     parameter [9:0] Ball_X_Min = 10'd0;       // Leftmost point on the X axis
     parameter [9:0] Ball_X_Max = 10'd639;     // Rightmost point on the X axis
     parameter [9:0] Ball_Y_Min = 10'd0;       // Topmost point on the Y axis
@@ -50,7 +49,7 @@ module  ball ( input         Clk,                // 50 MHz clock
             Ball_X_Pos <= Ball_X_Center;
             Ball_Y_Pos <= Ball_Y_Center;
             Ball_X_Motion <= 10'd0;
-            Ball_Y_Motion <= Ball_Y_Step;
+            Ball_Y_Motion <= 10'd0;
         end
         else
         begin
@@ -72,27 +71,27 @@ module  ball ( input         Clk,                // 50 MHz clock
         Ball_Y_Motion_in = Ball_Y_Motion;
 
         // Update position and motion only at rising edge of frame clock
-        if (frame_clk_rising_edge)
-        begin
-            // Be careful when using comparators with "logic" datatype because compiler treats
-            //   both sides of the operator as UNSIGNED numbers.
-            // e.g. Ball_Y_Pos - Ball_Size <= Ball_Y_Min
-            // If Ball_Y_Pos is 0, then Ball_Y_Pos - Ball_Size will not be -4, but rather a large positive number.
-            if( Ball_Y_Pos + Ball_Size >= Ball_Y_Max )  // Ball is at the bottom edge, BOUNCE!
-                Ball_Y_Motion_in = (~(Ball_Y_Step) + 1'b1);  // 2's complement.
-            else if ( Ball_Y_Pos <= Ball_Y_Min + Ball_Size )  // Ball is at the top edge, BOUNCE!
-                Ball_Y_Motion_in = Ball_Y_Step;
-            // TODO: Add other boundary detections and handle keypress here.
-
-			 if( Ball_X_Pos + Ball_Size >= Ball_X_Max )
-					 Ball_X_Motion_in = (~(Ball_X_Step) + 1'b1);
-				else if ( Ball_X_Pos <= Ball_X_Min + Ball_Size )
-					 Ball_X_Motion_in = Ball_X_Step;
-
-            // Update the ball's position with its motion
-            Ball_X_Pos_in = Ball_X_Pos + Ball_X_Motion;
-            Ball_Y_Pos_in = Ball_Y_Pos + Ball_Y_Motion;
-        end
+       //  if (frame_clk_rising_edge)
+       //  begin
+       //      // Be careful when using comparators with "logic" datatype because compiler treats
+       //      //   both sides of the operator as UNSIGNED numbers.
+       //      // e.g. Ball_Y_Pos - Ball_Size <= Ball_Y_Min
+       //      // If Ball_Y_Pos is 0, then Ball_Y_Pos - Ball_Size will not be -4, but rather a large positive number.
+       //      if( Ball_Y_Pos + Ball_Size >= Ball_Y_Max )  // Ball is at the bottom edge, BOUNCE!
+       //          Ball_Y_Motion_in = (~(Ball_Y_Step) + 1'b1);  // 2's complement.
+       //      else if ( Ball_Y_Pos <= Ball_Y_Min + Ball_Size )  // Ball is at the top edge, BOUNCE!
+       //          Ball_Y_Motion_in = Ball_Y_Step;
+       //      // TODO: Add other boundary detections and handle keypress here.
+       //
+			 // if( Ball_X_Pos + Ball_Size >= Ball_X_Max )
+				// 	 Ball_X_Motion_in = (~(Ball_X_Step) + 1'b1);
+				// else if ( Ball_X_Pos <= Ball_X_Min + Ball_Size )
+				// 	 Ball_X_Motion_in = Ball_X_Step;
+       //
+       //      // Update the ball's position with its motion
+       //      Ball_X_Pos_in = Ball_X_Pos + Ball_X_Motion;
+       //      Ball_Y_Pos_in = Ball_Y_Pos + Ball_Y_Motion;
+        // end
 
         /**************************************************************************************
             ATTENTION! Please answer the following quesiton in your lab report! Points will be allocated for the answers!
