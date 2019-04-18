@@ -46,19 +46,14 @@ module toplevel( input               CLOCK_50,
                                  DRAM_CLK      //SDRAM Clock
                     );
 
-   logic Reset_h, Clk, is_duck, is_ball;
+   logic Reset_h, Clk, is_duck;
 	 logic [9:0] DrawX, DrawY;
-   logic [23:0] duck_color;
+   logic [18:0] duck_addr;
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
         Reset_h <= ~(KEY[0]);        // The push buttons are active low
     end
-
-    logic [1:0] hpi_addr;
-    logic [15:0] hpi_data_in, hpi_data_out;
-    logic hpi_r, hpi_w, hpi_cs, hpi_reset;
-
 
 
      // You need to make sure that the port names here match the ports in Qsys-generated codes.
@@ -84,11 +79,11 @@ module toplevel( input               CLOCK_50,
 		 .VGA_VS(VGA_VS), .VGA_CLK(VGA_CLK), .VGA_BLANK_N(VGA_BLANK_N), .VGA_SYNC_N(VGA_SYNC_N),
 		 .DrawX(DrawX), .DrawY(DrawY));
 
-    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .DrawX(DrawX), .DrawY(DrawY), 
-	 .duck_color(duck_color), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
+    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .DrawX(DrawX), .DrawY(DrawY),
+	 .duck_addr(duck_addr), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
     duck duck_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-		.DrawY(DrawY), .is_duck(is_duck), .duck_color(duck_color));
+		.DrawY(DrawY), .is_duck(is_duck), .duck_addr(duck_addr));
 
 //    ball ball_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
 //		.DrawY(DrawY), .is_ball(is_ball));

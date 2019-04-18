@@ -18,20 +18,26 @@ module  color_mapper (
 							  input 					Clk,
 							  input           is_duck,
 							  input        [9:0] DrawX, DrawY,       // Current pixel coordinates
-						     input        [23:0] duck_color,
+						     input        [18:0] duck_addr,
 							  output logic [7:0] VGA_R, VGA_G, VGA_B // VGA RGB output
                      );
 
     logic [7:0] Red, Green, Blue;
+	 logic [3:0] index;
+	 logic [23:0] duck_color;
     // Output colors to VGA
     assign VGA_R = Red;
     assign VGA_G = Green;
     assign VGA_B = Blue;
 
+		spriteROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(index));
+		paletteROM palette(.Clk(Clk), .read_address(index), .data_Out(duck_color));
+
+
     // Assign color based on is_ball signal
     always_comb
     begin
-        if (is_duck == 1'b1)
+        if (is_duck == 1'b1 && duck_color != 24'hff0000)
           begin
             Red = duck_color[23:16];
             Green = duck_color[15:8];
@@ -40,10 +46,11 @@ module  color_mapper (
         else
           begin
               // Background with nice color gradient
-              Red = 8'hff;
-              Green = 8'hff;
+              Red = 8'h00;
+              Green = 8'h00;
               Blue = 8'hff;
           end
     end
 
+		
 endmodule

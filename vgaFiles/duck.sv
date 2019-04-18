@@ -3,28 +3,34 @@ module  duck( input          Clk,                // 50 MHz clock
                              frame_clk,          // The clock indicating a new frame (~60Hz)
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_duck,             // Whether current pixel belongs to Duck or background
-               output logic [23:0] duck_color
+               output logic [18:0] duck_addr
               );
 
 logic [9:0] Duck_X_Pos, Duck_X_Motion, Duck_Y_Pos, Duck_Y_Motion;
 logic [9:0] Duck_X_Pos_in, Duck_X_Motion_in, Duck_Y_Pos_in, Duck_Y_Motion_in;
+logic [2:0] which_duck, which_duck_in;
+int counter, counter_in, facing, facing_in;
 
 parameter [9:0] Duck_X_Center = 10'd320;  // Center position on the X axis
 parameter [9:0] Duck_Y_Center = 10'd240;  // Center position on the Y axis
-// parameter [9:0] Duck_X_Min = 10'd0;       // Leftmost point on the X axis
-// parameter [9:0] Duck_X_Max = 10'd639;     // Rightmost point on the X axis
+parameter [9:0] Duck_X_Min = 10'd0;       // Leftmost point on the X axis
+parameter [9:0] Duck_X_Max = 10'd575;     // Rightmost point on the X axis
 // parameter [9:0] Duck_Y_Min = 10'd0;       // Topmost point on the Y axis
 // parameter [9:0] Duck_Y_Max = 10'd479;     // Bottommost point on the Y axis
-// parameter [9:0] Duck_X_Step = 10'd1;      // Step size on the X axis
+parameter [9:0] Duck_X_Step = 10'd1;      // Step size on the X axis
 // parameter [9:0] Duck_Y_Step = 10'd1;      // Step size on the Y axis
-parameter [9:0] Duck_X_Size = 10'd38;        // Duck X size
-parameter [9:0] Duck_Y_Size = 10'd30;        // Duck X size
+parameter [9:0] Duck_X_Size = 10'd64;        // Duck X size
+parameter [9:0] Duck_Y_Size = 10'd64;        // Duck Y size
+parameter [9:0] Sprite_X_Size = 10'd640;        // Sprite X size
+parameter [9:0] Sprite_Y_Size = 10'd1288;        // Sprite Y size
+
 
 logic frame_clk_delayed, frame_clk_rising_edge;
 always_ff @ (posedge Clk) begin
     frame_clk_delayed <= frame_clk;
     frame_clk_rising_edge <= (frame_clk == 1'b1) && (frame_clk_delayed == 1'b0);
 end
+
 
 // Update registers
 always_ff @ (posedge Clk)
@@ -33,13 +39,19 @@ begin
     begin
         Duck_X_Pos <= Duck_X_Center;
         Duck_Y_Pos <= Duck_Y_Center;
+        which_duck <= 3'b000;
+        counter <= 10'd0;
+        facing <= 10'd0;
     end
     else
     begin
         Duck_X_Pos <= Duck_X_Pos_in;
         Duck_Y_Pos <= Duck_Y_Pos_in;
-        Duck_X_Motion <= 10'd0;
+        Duck_X_Motion <= Duck_X_Motion_in;
         Duck_Y_Motion <= 10'd0;
+        which_duck <= which_duck_in;
+        counter <= counter_in;
+        facing <= facing_in;
     end
 end
 
@@ -50,12 +62,38 @@ begin
     Duck_Y_Pos_in = Duck_Y_Pos;
     Duck_X_Motion_in = Duck_X_Motion;
     Duck_Y_Motion_in = Duck_Y_Motion;
+    which_duck_in = which_duck;
+	  counter_in = counter;
+    facing_in = facing;
 
-    // Update position and motion only at rising edge of frame clock
+    // Update position, motion, and duck frame only at rising edge of frame clock
     if (frame_clk_rising_edge)
-    begin
+      begin
+        counter_in = counter + 10'd1;
+        if(counter_in > 10'd10)
+          begin
+            counter_in = 10'd0;
+            if(which_duck == 3'b010)
+                which_duck_in = 3'b000;
+            else
+              which_duck_in = which_duck + 3'b001;
+          end
+        else
+          which_duck_in = which_duck;
+        if( Duck_X_Pos >= Duck_X_Max )
+          begin
+            Duck_X_Motion_in = (~(Duck_X_Step) + 1'b1);
+            facing_in = 10'd0;
+          end
+        else if ( Duck_X_Pos <= Duck_X_Min )
+        begin
+          Duck_X_Motion_in = Duck_X_Step;
+          facing_in = 10'd64;
+        end
 
-    end
+        // Update the ball's position with its motion
+        Duck_X_Pos_in = Duck_X_Pos + Duck_X_Motion;
+      end
 
 end
 
@@ -64,12 +102,11 @@ end
    from logic to int (signed by default) before they are multiplied. */
 int DistX, DistY, Size;
 logic [31:0] addr;
-logic [18:0] duck_addr;
 assign DistX = DrawX - Duck_X_Pos;
 assign DistY = DrawY - Duck_Y_Pos;
 
 //assign addr = 32'd550 + (DistY*32'd38) + DistX;
-assign addr =  DistY*Duck_X_Size + DistX;
+assign addr =  (DistY + facing)*(Sprite_X_Size) + DistX + which_duck*Duck_X_Size;
 
 always_comb begin
 	if(addr <= 32'h7ffff)
@@ -86,11 +123,14 @@ always_comb begin
 		end
 end
 
-duckyROM duckdown(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_color));
+// spriteROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_index));
+// paletteROM palette(.Clk(Clk), .read_address(duck_index), .data_Out(duck_color));
+
+// duckyROM ducky(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_color));
 
 always_comb begin
 
-    if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size) && (duck_color != 24'h00ff00))
+    if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size))
       is_duck = 1'b1;
     else
       is_duck = 1'b0;
