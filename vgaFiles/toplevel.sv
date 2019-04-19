@@ -46,14 +46,17 @@ module toplevel( input               CLOCK_50,
                                  DRAM_CLK      //SDRAM Clock
                     );
 
-   logic Reset_h, Clk, is_duck, is_dog;
+   logic Reset_h, Clk, is_duck, is_dog, Button1_h, Button2_h;
 	 logic [9:0] DrawX, DrawY;
    logic [15:0] duck_addr;
    logic [13:0] dog_addr;
+   logic [1:0] state;
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
         Reset_h <= ~(KEY[0]);        // The push buttons are active low
+        Button1_h <= ~(KEY[1]);
+        Button2_h <= ~(KEY[2]);
     end
 
 
@@ -72,6 +75,8 @@ module toplevel( input               CLOCK_50,
                              .sdram_wire_we_n(DRAM_WE_N),
                              .sdram_clk_clk(DRAM_CLK)
     );
+    // Control unit gamecontroller
+    Control gamecontroller(.CLK(Clk), .RESET(Reset_h), .Button1(Button1_h), .Button2(Button2_h), .state(state));
 
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
@@ -81,7 +86,7 @@ module toplevel( input               CLOCK_50,
 		 .DrawX(DrawX), .DrawY(DrawY));
 
     color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .DrawX(DrawX), .DrawY(DrawY),
-	 .duck_addr(duck_addr), .dog_addr(dog_addr), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
+	 .duck_addr(duck_addr), .dog_addr(dog_addr), .state(state), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
     duck duck_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
 		.DrawY(DrawY), .is_duck(is_duck), .duck_addr(duck_addr));
