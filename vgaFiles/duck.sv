@@ -3,7 +3,7 @@ module  duck( input          Clk,                // 50 MHz clock
                              frame_clk,          // The clock indicating a new frame (~60Hz)
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_duck,             // Whether current pixel belongs to Duck or background
-               output logic [18:0] duck_addr
+               output logic [15:0] duck_addr
               );
 
 logic [9:0] Duck_X_Pos, Duck_X_Motion, Duck_Y_Pos, Duck_Y_Motion;
@@ -13,7 +13,7 @@ int counter, counter_in, facing, facing_in;
 
 parameter [9:0] Duck_X_Center = 10'd320;  // Center position on the X axis
 parameter [9:0] Duck_Y_Center = 10'd240;  // Center position on the Y axis
-parameter [9:0] Duck_X_Min = 10'd0;       // Leftmost point on the X axis
+parameter [9:0] Duck_X_Min = 10'd1;       // Leftmost point on the X axis
 parameter [9:0] Duck_X_Max = 10'd575;     // Rightmost point on the X axis
 // parameter [9:0] Duck_Y_Min = 10'd0;       // Topmost point on the Y axis
 // parameter [9:0] Duck_Y_Max = 10'd479;     // Bottommost point on the Y axis
@@ -21,8 +21,7 @@ parameter [9:0] Duck_X_Step = 10'd1;      // Step size on the X axis
 // parameter [9:0] Duck_Y_Step = 10'd1;      // Step size on the Y axis
 parameter [9:0] Duck_X_Size = 10'd64;        // Duck X size
 parameter [9:0] Duck_Y_Size = 10'd64;        // Duck Y size
-parameter [9:0] Sprite_X_Size = 10'd640;        // Sprite X size
-parameter [9:0] Sprite_Y_Size = 10'd1288;        // Sprite Y size
+parameter [9:0] Sprite_X_Size = 10'd320;        // Sprite X size
 
 
 logic frame_clk_delayed, frame_clk_rising_edge;
@@ -69,6 +68,8 @@ begin
     // Update position, motion, and duck frame only at rising edge of frame clock
     if (frame_clk_rising_edge)
       begin
+    // ---------------------------------------------------------------------------
+    // This portion of the code iterates through the three duck sprites to animate the duck
         counter_in = counter + 10'd1;
         if(counter_in > 10'd10)
           begin
@@ -80,6 +81,8 @@ begin
           end
         else
           which_duck_in = which_duck;
+    // ---------------------------------------------------------------------------
+    // This code is what sets the motion of the duck and prevents it from going off the screen
         if( Duck_X_Pos >= Duck_X_Max )
           begin
             Duck_X_Motion_in = (~(Duck_X_Step) + 1'b1);
@@ -90,7 +93,7 @@ begin
           Duck_X_Motion_in = Duck_X_Step;
           facing_in = 10'd64;
         end
-
+    // ---------------------------------------------------------------------------
         // Update the ball's position with its motion
         Duck_X_Pos_in = Duck_X_Pos + Duck_X_Motion;
       end
@@ -109,17 +112,17 @@ assign DistY = DrawY - Duck_Y_Pos;
 assign addr =  (DistY + facing)*(Sprite_X_Size) + DistX + which_duck*Duck_X_Size;
 
 always_comb begin
-	if(addr <= 32'h7ffff)
+	if(addr <= 32'hffff)
 		begin
-			duck_addr = addr[18:0];
+			duck_addr = addr[15:0];
 		end
   else if(addr[31] == 1'b1)
     begin
-      duck_addr = 19'h0;
+      duck_addr = 16'h0;
     end
 	else
 		begin
-			duck_addr = 19'h0;
+			duck_addr = 16'h0;
 		end
 end
 

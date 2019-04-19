@@ -46,9 +46,10 @@ module toplevel( input               CLOCK_50,
                                  DRAM_CLK      //SDRAM Clock
                     );
 
-   logic Reset_h, Clk, is_duck;
+   logic Reset_h, Clk, is_duck, is_dog;
 	 logic [9:0] DrawX, DrawY;
-   logic [18:0] duck_addr;
+   logic [15:0] duck_addr;
+   logic [13:0] dog_addr;
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -79,11 +80,14 @@ module toplevel( input               CLOCK_50,
 		 .VGA_VS(VGA_VS), .VGA_CLK(VGA_CLK), .VGA_BLANK_N(VGA_BLANK_N), .VGA_SYNC_N(VGA_SYNC_N),
 		 .DrawX(DrawX), .DrawY(DrawY));
 
-    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .DrawX(DrawX), .DrawY(DrawY),
-	 .duck_addr(duck_addr), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
+    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .DrawX(DrawX), .DrawY(DrawY),
+	 .duck_addr(duck_addr), .dog_addr(dog_addr), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
     duck duck_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
 		.DrawY(DrawY), .is_duck(is_duck), .duck_addr(duck_addr));
+
+    dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
+		.DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));
 
 //    ball ball_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
 //		.DrawY(DrawY), .is_ball(is_ball));
