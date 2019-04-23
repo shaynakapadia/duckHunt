@@ -24,7 +24,7 @@ module toplevel( input               CLOCK_50,
                                  VGA_SYNC_N,   //VGA Sync signal
                                  VGA_BLANK_N,  //VGA Blank signal
                                  VGA_VS,       //VGA virtical sync signal
-                                 VGA_HS,       //VGA horizontal sync signal
+                                 VGA_HS       //VGA horizontal sync signal
              // // CY7C67200 Interface
              // inout  wire  [15:0] OTG_DATA,     //CY7C67200 Data bus 16 Bits
              // output logic [1:0]  OTG_ADDR,     //CY7C67200 Address 2 Bits
@@ -34,19 +34,19 @@ module toplevel( input               CLOCK_50,
              //                     OTG_RST_N,    //CY7C67200 Reset
              // input               OTG_INT,      //CY7C67200 Interrupt
              // SDRAM Interface for Nios II Software
-             output logic [12:0] DRAM_ADDR,    //SDRAM Address 13 Bits
-             inout  wire  [31:0] DRAM_DQ,      //SDRAM Data 32 Bits
-             output logic [1:0]  DRAM_BA,      //SDRAM Bank Address 2 Bits
-             output logic [3:0]  DRAM_DQM,     //SDRAM Data Mast 4 Bits
-             output logic        DRAM_RAS_N,   //SDRAM Row Address Strobe
-                                 DRAM_CAS_N,   //SDRAM Column Address Strobe
-                                 DRAM_CKE,     //SDRAM Clock Enable
-                                 DRAM_WE_N,    //SDRAM Write Enable
-                                 DRAM_CS_N,    //SDRAM Chip Select
-                                 DRAM_CLK      //SDRAM Clock
+//             output logic [12:0] DRAM_ADDR,    //SDRAM Address 13 Bits
+//             inout  wire  [31:0] DRAM_DQ,      //SDRAM Data 32 Bits
+//             output logic [1:0]  DRAM_BA,      //SDRAM Bank Address 2 Bits
+//             output logic [3:0]  DRAM_DQM,     //SDRAM Data Mast 4 Bits
+//             output logic        DRAM_RAS_N,   //SDRAM Row Address Strobe
+//                                 DRAM_CAS_N,   //SDRAM Column Address Strobe
+//                                 DRAM_CKE,     //SDRAM Clock Enable
+//                                 DRAM_WE_N,    //SDRAM Write Enable
+//                                 DRAM_CS_N,    //SDRAM Chip Select
+//                                 DRAM_CLK      //SDRAM Clock
                     );
 
-   logic Reset_h, Clk, is_duck, is_dog, Button1_h, Button2_h;
+   logic Reset_h, Clk, is_duck, is_dog, Button1_h, Button2_h, Button3_h, flew_away, bird_shot;
 	 logic [9:0] DrawX, DrawY;
    logic [15:0] duck_addr;
    logic [13:0] dog_addr;
@@ -57,26 +57,28 @@ module toplevel( input               CLOCK_50,
         Reset_h <= ~(KEY[0]);        // The push buttons are active low
         Button1_h <= ~(KEY[1]);
         Button2_h <= ~(KEY[2]);
+        Button3_h <= ~(KEY[3]);
     end
 
 
      // You need to make sure that the port names here match the ports in Qsys-generated codes.
-     lab9_soc nios_system(
-                             .clk_clk(Clk),
-                             .reset_reset_n(1'b1),    // Never reset NIOS
-                             .sdram_wire_addr(DRAM_ADDR),
-                             .sdram_wire_ba(DRAM_BA),
-                             .sdram_wire_cas_n(DRAM_CAS_N),
-                             .sdram_wire_cke(DRAM_CKE),
-                             .sdram_wire_cs_n(DRAM_CS_N),
-                             .sdram_wire_dq(DRAM_DQ),
-                             .sdram_wire_dqm(DRAM_DQM),
-                             .sdram_wire_ras_n(DRAM_RAS_N),
-                             .sdram_wire_we_n(DRAM_WE_N),
-                             .sdram_clk_clk(DRAM_CLK)
-    );
+//     lab9_soc nios_system(
+//                             .clk_clk(Clk),
+//                             .reset_reset_n(1'b1),    // Never reset NIOS
+//                             .sdram_wire_addr(DRAM_ADDR),
+//                             .sdram_wire_ba(DRAM_BA),
+//                             .sdram_wire_cas_n(DRAM_CAS_N),
+//                             .sdram_wire_cke(DRAM_CKE),
+//                             .sdram_wire_cs_n(DRAM_CS_N),
+//                             .sdram_wire_dq(DRAM_DQ),
+//                             .sdram_wire_dqm(DRAM_DQM),
+//                             .sdram_wire_ras_n(DRAM_RAS_N),
+//                             .sdram_wire_we_n(DRAM_WE_N),
+//                             .sdram_clk_clk(DRAM_CLK)
+//    );
     // Control unit gamecontroller
-    Control gamecontroller(.CLK(Clk), .RESET(Reset_h), .Button1(Button1_h), .Button2(Button2_h), .state(state));
+    Control gamecontroller(.Clk(Clk), .Reset(Reset_h), .start(Button1_h), .shot(Button2_h),
+    .flew_away(flew_away), .bird_shot(bird_shot), .state(state));
 
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
@@ -88,8 +90,8 @@ module toplevel( input               CLOCK_50,
     color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .DrawX(DrawX), .DrawY(DrawY),
 	 .duck_addr(duck_addr), .dog_addr(dog_addr), .state(state), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
-    duck duck_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-		.DrawY(DrawY), .is_duck(is_duck), .duck_addr(duck_addr));
+    duck duck_instance(.Clk(Clk), .Reset(Reset_h), .shot(Button3_h), .frame_clk(VGA_VS), .state(state), .DrawX(DrawX),
+		.DrawY(DrawY), .is_duck(is_duck), .flew_away(flew_away), .bird_shot(bird_shot), .duck_addr(duck_addr));
 
     dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
 		.DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));

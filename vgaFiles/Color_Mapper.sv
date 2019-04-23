@@ -49,70 +49,70 @@ module  color_mapper (
     // Assign color based on is_ball signal
     always_comb
     begin
-			case(state)
-				2'b00: begin
-									Red = 8'h00;
-									Green = 8'h00;
-									Blue = 8'hf0;
-							 end
-				2'b01:
-							begin
+			if(state == 2'b00)
+				begin
+					Red = 8'h00;
+					Green = 8'h00;
+					Blue = 8'hf0;
+				end
+			else if( (state == 2'b10) || (state == 2'b01) )
+				begin
 				//---------------------------------------------------------------------------------------------------
 					// state GAME
-				 				if ( (is_duck && ~is_dog) &&  duck_color != 24'hF442EE)
-					        begin
-					          Red = duck_color[23:16];
+				 		if ( (is_duck && ~is_dog) &&  duck_color != 24'hF442EE)
+				       begin
+				         Red = duck_color[23:16];
+				         Green = duck_color[15:8];
+				         Blue = duck_color[7:0];
+				       end
+						else if ((~is_duck && is_dog) && dog_color != 24'hF442EE)
+							begin
+								 	Red = dog_color[23:16];
+								 	Green = dog_color[15:8];
+								 	Blue = dog_color[7:0];
+							  end
+						else if ((is_duck && is_dog))
+							begin
+								if ((duck_color == 24'hF442EE) && (dog_color == 24'hF442EE) )
+									begin
+										Red = 8'h00;
+										Green = 8'h00;
+										Blue = 8'hf0;
+									end
+								else if(dog_color == 24'hF442EE)
+									begin
+										Red = duck_color[23:16];
 					          Green = duck_color[15:8];
 					          Blue = duck_color[7:0];
-					        end
-								else if ((~is_duck && is_dog) && dog_color != 24'hF442EE)
-									begin
-					 				 	Red = dog_color[23:16];
-					 				 	Green = dog_color[15:8];
-					 				 	Blue = dog_color[7:0];
-					 			  end
-								else if ((is_duck && is_dog))
-									begin
-										if ((duck_color == 24'hF442EE) && (dog_color == 24'hF442EE) )
-											begin
-												Red = 8'h00;
-												Green = 8'h00;
-												Blue = 8'hf0;
-											end
-										else if(dog_color == 24'hF442EE)
-											begin
-												Red = duck_color[23:16];
-							          Green = duck_color[15:8];
-							          Blue = duck_color[7:0];
-											end
-										else
-											begin
-												Red = dog_color[23:16];
-												Green = dog_color[15:8];
-												Blue = dog_color[7:0];
-											end
 									end
-				        else
-				          begin
-				              // Background with nice color gradient
-				              Red = 8'h00;
-				              Green = 8'h00;
-				              Blue = 8'hf0;
-				          end
+								else
+									begin
+										Red = dog_color[23:16];
+										Green = dog_color[15:8];
+										Blue = dog_color[7:0];
+									end
+							end
+				      else
+				        begin
+				            Red = 8'h00;
+				            Green = 8'h00;
+				            Blue = 8'hf0;
+				        end
 			//---------------------------------------------------------------------------------------------------
 						end
-		2'b10:
+		else if(state == 2'b11)
 			begin
 					Red = 8'h00;
 					Green = 8'h00;
 					Blue = 8'h00;
 			end
-		default: begin
-						Red = 8'h00;
-						Green = 8'h00;
-						Blue = 8'h00;
-					end
-	  endcase
+		else
+			begin
+					Red = 8'h00;
+					Green = 8'h00;
+					Blue = 8'h00;
+			end
+
     end
 
 
