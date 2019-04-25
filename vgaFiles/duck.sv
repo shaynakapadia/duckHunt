@@ -2,6 +2,7 @@ module  duck( input          Clk,                // 50 MHz clock
                              Reset,              // Active-high reset signal
                              frame_clk,          // The clock indicating a new frame (~60Hz)
                input         shot,
+               input         new_duck,
 					     input [1:0]	 state,
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_duck,             // Whether current pixel belongs to Duck or background
@@ -15,18 +16,26 @@ logic [9:0] Duck_X_Pos_in, Duck_X_Motion_in, Duck_Y_Pos_in, Duck_Y_Motion_in;
 logic [2:0] which_duck, which_duck_in;
 int counter, counter_in, facing, facing_in;
 
-parameter [9:0] Duck_X_Start = 10'd320;  // Center position on the X axis
-parameter [9:0] Duck_Y_Start = 10'd245;  // Center position on the Y axis
-parameter [9:0] Duck_X_Min = 10'd100;       // Leftmost point on the X axis
-parameter [9:0] Duck_X_Max = 10'd400;     // Rightmost point on the X axis
-parameter [9:0] Duck_Y_Min = 10'd0;       // Topmost point on the Y axis
-parameter [9:0] Duck_Y_Max = 10'd245;     // Bottommost point on the Y axis
-parameter [9:0] Duck_X_Step = 10'd2;      // Step size on the X axis
-parameter [9:0] Duck_Y_Step = 10'd1;      // Step size on the Y axis
-parameter [9:0] Duck_X_Size = 10'd64;        // Duck X size
-parameter [9:0] Duck_Y_Size = 10'd64;        // Duck Y size
-parameter [9:0] Sprite_X_Size = 10'd320;        // Sprite X size
+logic [9:0] Duck_X_Start = 10'd320;  // Center position on the X axis
+logic [9:0] Duck_Y_Start = 10'd245;  // Center position on the Y axis
+logic [9:0] Duck_X_Min;       // Leftmost point on the X axis
+logic [9:0] Duck_X_Max;     // Rightmost point on the X axis
+logic [9:0] Duck_Y_Min = 10'd0;       // Topmost point on the Y axis
+logic [9:0] Duck_Y_Max = 10'd245;     // Bottommost point on the Y axis
+logic [9:0] Duck_X_Step;      // Step size on the X axis
+logic [9:0] Duck_Y_Step;      // Step size on the Y axis
+logic [9:0] Duck_X_Size = 10'd64;        // Duck X size
+logic [9:0] Duck_Y_Size = 10'd64;        // Duck Y size
+logic [9:0] Sprite_X_Size = 10'd320;        // Sprite X size
 
+random duckX(.Clk(new_duck), .Reset(Reset), .seed(32'd789),
+.max(32'd620), .min(32'd310), .data(Duck_X_Max));
+random duckY(.Clk(new_duck), .Reset(Reset), .seed(32'd433),
+.max(32'd200), .min(32'd40), .data(Duck_X_Min));
+random duckXspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd7523),
+.max(32'd6), .min(32'd1), .data(Duck_X_Step));
+random duckYspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd3123),
+.max(32'd6), .min(32'd1), .data(Duck_Y_Step));
 
 logic frame_clk_delayed, frame_clk_rising_edge;
 always_ff @ (posedge Clk) begin

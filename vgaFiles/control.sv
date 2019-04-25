@@ -12,6 +12,7 @@ module control (
     input  logic flew_away,
     input  logic game_over,
     input  logic bird_shot,
+    output  logic new_duck,
     output logic reset_shots,
     output logic reset_score,
     output logic reset_birds,
@@ -34,6 +35,7 @@ begin
 
     //Default values for outputs
     state = 2'b00;
+    new_duck = 1'b0;
     reset_shots = 1'b0;
     reset_score = 1'b0;
     reset_birds = 1'b0;
@@ -95,6 +97,7 @@ begin
       P1:
         begin
           state = 2'b01;
+          new_duck = 1'b1;
         end
       P2:
         begin

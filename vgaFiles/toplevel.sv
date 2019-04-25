@@ -23,6 +23,7 @@ module toplevel( input               CLOCK_50,
    logic is_duck, is_dog;
    logic flew_away, bird_shot;
    logic no_shots_left, no_birds_left;
+   logic new_duck;
    logic reset_shots, reset_score, reset_birds;
    logic [1:0] state;
 	 logic [31:0] num_shots, score, num_birds;
@@ -42,8 +43,8 @@ module toplevel( input               CLOCK_50,
     // Control unit gamecontroller
     control gamecontroller(.Clk(Clk), .Reset(Reset_h), .start(Button1_h),
     .no_shots_left(no_shots_left), .flew_away(flew_away), .game_over(no_birds_left),
-    .bird_shot(bird_shot), .reset_shots(reset_shots), .reset_score(reset_score),
-    .reset_birds(reset_birds), .state(state));
+    .bird_shot(bird_shot), .new_duck(new_duck), .reset_shots(reset_shots),
+    .reset_score(reset_score), .reset_birds(reset_birds), .state(state));
 
     shotKeeper shotshandler(.Clk(Clk), .Reset(reset_shots), .shot(Button2_h), .state(state),
     .no_shots_left(no_shots_left), .num_shots(num_shots));
@@ -55,8 +56,8 @@ module toplevel( input               CLOCK_50,
     .state(state), .no_birds_left(no_birds_left), .num_birds(num_birds));
 
     duck duck_instance(.Clk(Clk), .Reset(Reset_h), .shot(Button3_h),
-    .frame_clk(VGA_VS), .state(state), .DrawX(DrawX), .DrawY(DrawY),
-    .is_duck(is_duck), .flew_away(flew_away), .bird_shot(bird_shot),
+    .new_duck(new_duck), .frame_clk(VGA_VS), .state(state), .DrawX(DrawX),
+    .DrawY(DrawY), .is_duck(is_duck), .flew_away(flew_away), .bird_shot(bird_shot),
     .duck_addr(duck_addr));
 
     dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS),
