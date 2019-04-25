@@ -17,11 +17,11 @@ int counter, counter_in, facing, facing_in;
 
 parameter [9:0] Duck_X_Start = 10'd320;  // Center position on the X axis
 parameter [9:0] Duck_Y_Start = 10'd245;  // Center position on the Y axis
-parameter [9:0] Duck_X_Min = 10'd1;       // Leftmost point on the X axis
-parameter [9:0] Duck_X_Max = 10'd575;     // Rightmost point on the X axis
+parameter [9:0] Duck_X_Min = 10'd100;       // Leftmost point on the X axis
+parameter [9:0] Duck_X_Max = 10'd400;     // Rightmost point on the X axis
 parameter [9:0] Duck_Y_Min = 10'd0;       // Topmost point on the Y axis
 parameter [9:0] Duck_Y_Max = 10'd245;     // Bottommost point on the Y axis
-parameter [9:0] Duck_X_Step = 10'd1;      // Step size on the X axis
+parameter [9:0] Duck_X_Step = 10'd2;      // Step size on the X axis
 parameter [9:0] Duck_Y_Step = 10'd1;      // Step size on the Y axis
 parameter [9:0] Duck_X_Size = 10'd64;        // Duck X size
 parameter [9:0] Duck_Y_Size = 10'd64;        // Duck Y size
@@ -73,7 +73,7 @@ begin
     flew_away = 1'b0;
     bird_shot = 1'b0;
     // Update position, motion, and duck frame only at rising edge of frame clock
-    if (frame_clk_rising_edge && (state == 3'b010))
+    if (frame_clk_rising_edge && (state == 2'b10))
       begin
     // ---------------------------------------------------------------------------
     // This portion of the code iterates through the three duck sprites to animate the duck

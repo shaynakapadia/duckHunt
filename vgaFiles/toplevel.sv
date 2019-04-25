@@ -1,56 +1,35 @@
-//-------------------------------------------------------------------------
-//      lab8.sv                                                          --
-//      Christine Chen                                                   --
-//      Fall 2014                                                        --
-//                                                                       --
-//      Modified by Po-Han Huang                                         --
-//      10/06/2017                                                       --
-//                                                                       --
-//      Fall 2017 Distribution                                           --
-//                                                                       --
-//      For use with ECE 385 Lab 8                                       --
-//      UIUC ECE Department                                              --
-//-------------------------------------------------------------------------
-
 
 module toplevel( input               CLOCK_50,
-             input        [3:0]  KEY,          //bit 0 is set up as Reset
-             //output logic [6:0]  HEX0, HEX1,
-             // VGA Interface
-             output logic [7:0]  VGA_R,        //VGA Red
-                                 VGA_G,        //VGA Green
-                                 VGA_B,        //VGA Blue
-             output logic        VGA_CLK,      //VGA Clock
-                                 VGA_SYNC_N,   //VGA Sync signal
-                                 VGA_BLANK_N,  //VGA Blank signal
-                                 VGA_VS,       //VGA virtical sync signal
-                                 VGA_HS       //VGA horizontal sync signal
-             // // CY7C67200 Interface
-             // inout  wire  [15:0] OTG_DATA,     //CY7C67200 Data bus 16 Bits
-             // output logic [1:0]  OTG_ADDR,     //CY7C67200 Address 2 Bits
-             // output logic        OTG_CS_N,     //CY7C67200 Chip Select
-             //                     OTG_RD_N,     //CY7C67200 Write
-             //                     OTG_WR_N,     //CY7C67200 Read
-             //                     OTG_RST_N,    //CY7C67200 Reset
-             // input               OTG_INT,      //CY7C67200 Interrupt
-             // SDRAM Interface for Nios II Software
-//             output logic [12:0] DRAM_ADDR,    //SDRAM Address 13 Bits
-//             inout  wire  [31:0] DRAM_DQ,      //SDRAM Data 32 Bits
-//             output logic [1:0]  DRAM_BA,      //SDRAM Bank Address 2 Bits
-//             output logic [3:0]  DRAM_DQM,     //SDRAM Data Mast 4 Bits
-//             output logic        DRAM_RAS_N,   //SDRAM Row Address Strobe
-//                                 DRAM_CAS_N,   //SDRAM Column Address Strobe
-//                                 DRAM_CKE,     //SDRAM Clock Enable
-//                                 DRAM_WE_N,    //SDRAM Write Enable
-//                                 DRAM_CS_N,    //SDRAM Chip Select
-//                                 DRAM_CLK      //SDRAM Clock
+                 input        [3:0]  KEY,          //bit 0 is set up as Reset
+                 output logic [7:0]  VGA_R,        //VGA Red
+                                     VGA_G,        //VGA Green
+                                     VGA_B,        //VGA Blue
+                 output logic        VGA_CLK,      //VGA Clock
+                                     VGA_SYNC_N,   //VGA Sync signal
+                                     VGA_BLANK_N,  //VGA Blank signal
+                                     VGA_VS,       //VGA virtical sync signal
+                                     VGA_HS,       //VGA horizontal sync signal
+                 output logic [6:0]  HEX0,
+                 output logic [6:0]  HEX1,
+                 output logic [6:0]  HEX2,
+                 output logic [6:0]  HEX3,
+                 output logic [6:0]  HEX4,
+                 output logic [6:0]  HEX5,
+                 output logic [6:0]  HEX6,
+                 output logic [6:0]  HEX7
                     );
 
-   logic Reset_h, Clk, is_duck, is_dog, Button1_h, Button2_h, Button3_h, flew_away, bird_shot;
-	 logic [9:0] DrawX, DrawY;
+   logic Reset_h, Clk, Button1_h, Button2_h, Button3_h;
+   logic is_duck, is_dog;
+   logic flew_away, bird_shot;
+   logic no_shots_left, no_birds_left;
+   logic reset_shots, reset_score, reset_birds;
+   logic [1:0] state;
+	 logic [31:0] num_shots, score, num_birds;
+   logic [9:0] DrawX, DrawY;
    logic [15:0] duck_addr;
    logic [13:0] dog_addr;
-   logic [1:0] state;
+
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -60,25 +39,28 @@ module toplevel( input               CLOCK_50,
         Button3_h <= ~(KEY[3]);
     end
 
-
-     // You need to make sure that the port names here match the ports in Qsys-generated codes.
-//     lab9_soc nios_system(
-//                             .clk_clk(Clk),
-//                             .reset_reset_n(1'b1),    // Never reset NIOS
-//                             .sdram_wire_addr(DRAM_ADDR),
-//                             .sdram_wire_ba(DRAM_BA),
-//                             .sdram_wire_cas_n(DRAM_CAS_N),
-//                             .sdram_wire_cke(DRAM_CKE),
-//                             .sdram_wire_cs_n(DRAM_CS_N),
-//                             .sdram_wire_dq(DRAM_DQ),
-//                             .sdram_wire_dqm(DRAM_DQM),
-//                             .sdram_wire_ras_n(DRAM_RAS_N),
-//                             .sdram_wire_we_n(DRAM_WE_N),
-//                             .sdram_clk_clk(DRAM_CLK)
-//    );
     // Control unit gamecontroller
-    Control gamecontroller(.Clk(Clk), .Reset(Reset_h), .start(Button1_h), .shot(Button2_h),
-    .flew_away(flew_away), .bird_shot(bird_shot), .state(state));
+    control gamecontroller(.Clk(Clk), .Reset(Reset_h), .start(Button1_h),
+    .no_shots_left(no_shots_left), .flew_away(flew_away), .game_over(no_birds_left),
+    .bird_shot(bird_shot), .reset_shots(reset_shots), .reset_score(reset_score),
+    .reset_birds(reset_birds), .state(state));
+
+    shotKeeper shotshandler(.Clk(Clk), .Reset(reset_shots), .shot(Button2_h), .state(state),
+    .no_shots_left(no_shots_left), .num_shots(num_shots));
+
+    scoreKeeper scorehandler(.Clk(Clk), .Reset(reset_score), .bird_shot(bird_shot),
+    .state(state), .score(score));
+
+    birdKeeper birdhandler(.Clk(Clk), .Reset(reset_birds), .flew_away(flew_away),
+    .state(state), .no_birds_left(no_birds_left), .num_birds(num_birds));
+
+    duck duck_instance(.Clk(Clk), .Reset(Reset_h), .shot(Button3_h),
+    .frame_clk(VGA_VS), .state(state), .DrawX(DrawX), .DrawY(DrawY),
+    .is_duck(is_duck), .flew_away(flew_away), .bird_shot(bird_shot),
+    .duck_addr(duck_addr));
+
+    dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS),
+    .DrawX(DrawX), .DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));
 
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
@@ -87,25 +69,42 @@ module toplevel( input               CLOCK_50,
 		 .VGA_VS(VGA_VS), .VGA_CLK(VGA_CLK), .VGA_BLANK_N(VGA_BLANK_N), .VGA_SYNC_N(VGA_SYNC_N),
 		 .DrawX(DrawX), .DrawY(DrawY));
 
-    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .DrawX(DrawX), .DrawY(DrawY),
-	 .duck_addr(duck_addr), .dog_addr(dog_addr), .state(state), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
+    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog),
+    .DrawX(DrawX), .DrawY(DrawY), .duck_addr(duck_addr), .dog_addr(dog_addr),
+    .state(state), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
-    duck duck_instance(.Clk(Clk), .Reset(Reset_h), .shot(Button3_h), .frame_clk(VGA_VS), .state(state), .DrawX(DrawX),
-		.DrawY(DrawY), .is_duck(is_duck), .flew_away(flew_away), .bird_shot(bird_shot), .duck_addr(duck_addr));
 
-    dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-		.DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));
+    hexdriver hexdrv0 (
+    	.In(score[3:0]),
+       .Out(HEX0)
+    );
+    hexdriver hexdrv1 (
+    	.In(score[7:4]),
+       .Out(HEX1)
+    );
+    hexdriver hexdrv2 (
+    	.In(score[11:8]),
+       .Out(HEX2)
+    );
+    hexdriver hexdrv3 (
+    	.In(score[15:12]),
+       .Out(HEX3)
+    );
 
-//    ball ball_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-//		.DrawY(DrawY), .is_ball(is_ball));
-//    // Display keycode on hex display
-//    HexDriver hex_inst_0 (keycode[3:0], HEX0);
-//    HexDriver hex_inst_1 (keycode[7:4], HEX1);
-
-    /**************************************************************************************
-        ATTENTION! Please answer the following quesiton in your lab report! Points will be allocated for the answers!
-        Hidden Question #1/2:
-        What are the advantages and/or disadvantages of using a USB interface over PS/2 interface to
-             connect to the keyboard? List any two.  Give an answer in your Post-Lab.
-    **************************************************************************************/
+    hexdriver hexdrv4 (
+      .In(num_shots[3:0]),
+       .Out(HEX4)
+    );
+    hexdriver hexdrv5 (
+      .In(num_shots[7:4]),
+       .Out(HEX5)
+    );
+    hexdriver hexdrv6 (
+      .In(num_birds[3:0]),
+       .Out(HEX6)
+    );
+    hexdriver hexdrv7 (
+      .In(num_birds[7:4]),
+       .Out(HEX7)
+    );
 endmodule
