@@ -13,6 +13,11 @@ int x[9];
 int y[9];
 int isX;
 
+/*Some time constraints*/
+unsigned long curr_time;
+unsigned long last_time;
+unsigned long wait_time;
+
 void toBin(unsigned int num, char ar){
   if(ar == 'x'){
     for(int i=0; i<9; i++){
@@ -69,7 +74,8 @@ void setup()
       y[i] = 0;
     }
     
-
+  wait_time  = 6; //sets to wait about 6 milliseconds
+  last_time = millis();
 }
 
 void loop() {
@@ -88,19 +94,22 @@ void loop() {
   toBin(y_coord, 'y');
 
   /* Depending on the value put in last, load the x or y coordinates into the pins */
-  if(isX){
-    for(int i = 0; i< 9; i++){
-      digitalWrite(Pins[i], x[i]);
+  curr_time = millis();
+  if(curr_time-last_time > wait_time){
+    last_time = curr_time;
+    if(isX){
+      for(int i = 0; i< 9; i++){
+        digitalWrite(Pins[i], x[i]);
+      }
+    isX = 0;
     }
-  isX = 0;
-  }
-  else{
-    for(int i = 0; i< 9; i++){
-      digitalWrite(Pins[i], y[i]);
+    else{
+      for(int i = 0; i< 9; i++){
+        digitalWrite(Pins[i], y[i]);
+      }
+    isX = 1;    
     }
-  isX = 1;    
   }
-
   /* Write Trigger Pin */  
   digitalWrite(Pins[9], trigger);
   digitalWrite(Pins[10], isX);
