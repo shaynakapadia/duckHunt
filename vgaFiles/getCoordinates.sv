@@ -7,7 +7,7 @@ module getCoordinates(
   );
   always @(posedge Clk)
     begin
-      shot = GPIO[9];
+      shot = ~GPIO[9];
     end
   always @(negedge GPIO[10])
     begin

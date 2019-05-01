@@ -7,7 +7,6 @@ module  duck( input          Clk,                // 50 MHz clock
                output logic  is_duck,             // Whether current pixel belongs to Duck or background
                output logic  flew_away,
 				       output logic  duck_ded_done,
-               output logic  bird_shot,
                output logic [9:0] duck_x, duck_y,
                output logic [15:0] duck_addr
               );
@@ -127,7 +126,6 @@ begin
     releasey_in = releasey;
     facing_in = facing;
     flew_away = 1'b0;
-    bird_shot = 1'b0;
     duck_ded_done = 1'b0;
     // Update position, motion, and duck frame only at rising edge of frame clock
     if (frame_clk_rising_edge && state == 3'b010)
@@ -194,12 +192,6 @@ begin
                     Duck_Y_Motion_in = Duck_Y_Step;
 
                 end
-          // ---------------------------------------------------------------------------
-          // This code check if the bird has been shot
-            if(shot && ~flew_away)
-              begin
-                bird_shot = 1'b1;
-              end
           end
         // ---------------------------------------------------------------------------
         // Update the duck's position with its motion

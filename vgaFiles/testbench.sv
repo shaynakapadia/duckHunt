@@ -36,11 +36,13 @@ toplevel testmod(.*);
 always begin : CLOCK_GENERATION
 
 #1 CLOCK_50 = ~CLOCK_50;
+VGA_VS = ~VGA_VS;
 
 end
 
 initial begin : CLOCK_INITIALIZATION
 		CLOCK_50 = 0;
+		VGA_VS = 0;
 end
 
 initial begin: TEST_VECTORS
@@ -48,22 +50,21 @@ initial begin: TEST_VECTORS
 KEY = 4'b1111;
 
 #6
-KEY = 4'b1101;
+KEY = 4'b1110;
 
 #2
 KEY = 4'b1111;
 
 #4
-KEY = 4'b1011;
+KEY = 4'b1101;
 
-#12
+#4
 KEY = 4'b1111;
 
 #8
 KEY = 4'b0111;
 
-#12
-KEY = 4'b1111;
+
 
 end
 endmodule

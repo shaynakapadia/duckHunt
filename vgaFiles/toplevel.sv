@@ -66,7 +66,7 @@ module toplevel( input               CLOCK_50,
 
     duck duck_instance(.Clk(Clk), .Reset(Reset_h), .shot(Button3_h), .new_round(new_round), .frame_clk(VGA_VS),
 	  .state(state), .DrawX(DrawX), .DrawY(DrawY), .is_duck(is_duck), .duck_ded_done(duck_ded_done),
-    .flew_away(flew_away), .bird_shot(bird_shot), .duck_addr(duck_addr));
+    .flew_away(flew_away), .duck_addr(duck_addr));
 
     dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS),
     .DrawX(DrawX), .DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));
@@ -74,10 +74,11 @@ module toplevel( input               CLOCK_50,
     score_display score_instance(.*, .Clk(Clk), .Reset(Reset), .frame_clk(frame_clk), .state(state), .DrawX(DrawX),
      .DrawY(DrawY), .score(score), .is_score(is_score), .score_addr(score_addr));
 
-    cursor cursor_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
-    .x(x), .y(y), .DrawY(DrawY), .is_cursor(is_cursor));
+    cursor cursor_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .shot(shot), .no_shots_left(no_shots_left),
+    .DrawX(DrawX), .DrawY(DrawY), .x(x), .y(y), .duck_x(duck_x), .duck_y(duck_y), .bird_shot(bird_shot), .is_cursor(is_cursor));
 
     getCoordinates coords(.Clk(Clk), .GPIO(GPIO), .shot(shot), .cursor_y(cursor_y), .cursor_x(cursor_x));
+    
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
 
