@@ -12,11 +12,12 @@ module control (
     input  logic flew_away,
     input  logic game_over,
     input  logic bird_shot,
-    output  logic new_duck,
+    input  logic duck_ded_done,
+    output logic new_round,
     output logic reset_shots,
     output logic reset_score,
     output logic reset_birds,
-    output logic [1:0] state
+    output logic [2:0] state
 );
 enum logic [3:0] { Start, P1, P2, P2_1, P2_2, P2_3, P3, Done } State, Next_State;
 
@@ -34,8 +35,8 @@ begin
     Next_State = State;
 
     //Default values for outputs
-    state = 2'b00;
-    new_duck = 1'b0;
+    state = 3'b000;
+    new_round = 1'b0;
     reset_shots = 1'b0;
     reset_score = 1'b0;
     reset_birds = 1'b0;
@@ -56,7 +57,7 @@ begin
           else if(flew_away)
             Next_State = P3;
           else if(bird_shot)
-            Next_State = P3;
+            Next_State = P2_2;
           else
             Next_State = P2;
         end
@@ -66,6 +67,13 @@ begin
           Next_State = P3;
         else
           Next_State = P2_1;
+      end
+      P2_2:
+      begin
+        if(duck_ded_done)
+          Next_State = P3;
+        else
+          Next_State = P2_2;
       end
       P3:
       begin
@@ -89,39 +97,40 @@ begin
     case(State)
       Start:
         begin
-          state = 2'b00;
+          state = 3'b000;
           reset_shots = 1'b1;
           reset_score = 1'b1;
           reset_birds = 1'b1;
         end
       P1:
         begin
-          state = 2'b01;
-          new_duck = 1'b1;
+          state = 3'b001;
+          new_round = 1'b1;
         end
       P2:
         begin
-          state = 2'b10;
+          state = 3'b010;
         end
       P2_1:
         begin
-          state = 2'b10;
+          state = 3'b010;
+        end
+      P2_2:
+        begin
+          state = 3'b100;
         end
       P3:
         begin
-          state = 2'b10;
+          state = 3'b010;
           reset_shots = 1'b1;
         end
       Done:
         begin
-          state = 2'b11;
+          state = 3'b011;
           reset_score = 1'b1;
           reset_birds = 1'b1;
         end
-      default:
-        begin
-          state = 2'b00;
-        end
+      default:;
     endcase
 
 end
