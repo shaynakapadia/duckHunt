@@ -1,6 +1,7 @@
 
 module toplevel( input               CLOCK_50,
                  input        [3:0]  KEY,          //bit 0 is set up as Reset
+                 input [35:0] GPIO,
                  output logic [7:0]  VGA_R,        //VGA Red
                                      VGA_G,        //VGA Green
                                      VGA_B,        //VGA Blue
@@ -20,9 +21,10 @@ module toplevel( input               CLOCK_50,
                     );
 
    logic Reset_h, Clk, Button1_h, Button2_h, Button3_h;
-   logic is_duck, is_dog, is_score;
+   logic is_duck, is_dog, is_score, is_cursor;
    logic flew_away, bird_shot;
    logic no_shots_left, no_birds_left;
+   logic shot;
    logic new_round;
 	 logic duck_ded_done;
    logic reset_shots, reset_score, reset_birds;
@@ -33,7 +35,11 @@ module toplevel( input               CLOCK_50,
    logic [13:0] dog_addr;
    logic [11:0] score_addr;
    logic [31:0] index1, index2, index3, index4;
+   logic [8:0] cursor_x, cursor_y;
+   logic [9:0] x, y;
 
+   assign x = cursor_x << 1;
+   assign y = {1'b0, cursor_y};
 
     assign Clk = CLOCK_50;
     always_ff @ (posedge Clk) begin
@@ -68,6 +74,10 @@ module toplevel( input               CLOCK_50,
     score_display score_instance(.*, .Clk(Clk), .Reset(Reset), .frame_clk(frame_clk), .state(state), .DrawX(DrawX),
      .DrawY(DrawY), .score(score), .is_score(is_score), .score_addr(score_addr));
 
+    cursor cursor_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS), .DrawX(DrawX),
+    .x(x), .y(y), .DrawY(DrawY), .is_cursor(is_cursor));
+
+    getCoordinates coords(.Clk(Clk), .GPIO(GPIO), .shot(shot), .cursor_y(cursor_y), .cursor_x(cursor_x));
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
 
@@ -75,42 +85,48 @@ module toplevel( input               CLOCK_50,
 		 .VGA_VS(VGA_VS), .VGA_CLK(VGA_CLK), .VGA_BLANK_N(VGA_BLANK_N), .VGA_SYNC_N(VGA_SYNC_N),
 		 .DrawX(DrawX), .DrawY(DrawY));
 
-    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .is_score(is_score),
-    .DrawX(DrawX), .DrawY(DrawY), .duck_addr(duck_addr), .dog_addr(dog_addr), .score_addr(score_addr),
+    color_mapper color_instance(.Clk(Clk), .is_duck(is_duck), .is_dog(is_dog), .is_score(is_score), .is_cursor(is_cursor),
+    .shot(shot), .DrawX(DrawX), .DrawY(DrawY), .duck_addr(duck_addr), .dog_addr(dog_addr), .score_addr(score_addr),
     .state(state), .VGA_R(VGA_R), .VGA_G(VGA_G), .VGA_B(VGA_B));
 
 
     hexdriver hexdrv0 (
-    	.In(score[3:0]),
-       .Out(HEX0)
-    );
-    hexdriver hexdrv1 (
-    	.In(score[7:4]),
-       .Out(HEX1)
-    );
-    hexdriver hexdrv2 (
-    	.In(score[11:8]),
-       .Out(HEX2)
-    );
-    hexdriver hexdrv3 (
-    	.In(score[15:12]),
-       .Out(HEX3)
-    );
+    .In(cursor_x[3:0]),
+    .Out(HEX0)
+  );
 
-    hexdriver hexdrv4 (
-      .In(index1[3:0]),
-       .Out(HEX4)
-    );
-    hexdriver hexdrv5 (
-      .In(index2[3:0]),
-       .Out(HEX5)
-    );
-    hexdriver hexdrv6 (
-      .In(index3[3:0]),
-       .Out(HEX6)
-    );
-    hexdriver hexdrv7 (
-      .In({1'b0, state[2:0]}),
-       .Out(HEX7)
-    );
+  hexdriver hexdrv1 (
+    .In(cursor_x[7:4]),
+    .Out(HEX1)
+  );
+
+  hexdriver hexdrv2 (
+    .In({3'b000, cursor_x[8]}),
+    .Out(HEX2)
+  );
+
+  hexdriver hexdrv3 (
+    .In(cursor_y[3:0]),
+    .Out(HEX3)
+  );
+
+  hexdriver hexdrv4 (
+    .In(cursor_y[7:4]),
+    .Out(HEX4)
+  );
+
+  hexdriver hexdrv5 (
+    .In({3'b000, cursor_y[8]}),
+    .Out(HEX5)
+  );
+
+  hexdriver hexdrv6 (
+    .In({3'b000, GPIO[10]}),
+    .Out(HEX6)
+  );
+
+  hexdriver hexdrv7 (
+    .In({3'b000, GPIO[9]}),
+    .Out(HEX7)
+  );
 endmodule

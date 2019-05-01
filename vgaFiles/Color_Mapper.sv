@@ -19,6 +19,8 @@ module  color_mapper (
 							  input           is_duck,
 								input 					is_dog,
 								input 					is_score,
+								input 					is_cursor,
+								input 					shot,
 								input 			 [2:0] state,
 							  input        [9:0] DrawX, DrawY,       // Current pixel coordinates
 						    input        [15:0] duck_addr,
@@ -58,6 +60,19 @@ module  color_mapper (
 			else if( (state == 3'b010) || (state == 3'b001) || (state == 3'b100) ) begin
 				//---------------------------------------------------------------------------------------------------
 					// state GAME
+					if(is_cursor) begin
+						if(shot) begin
+							Red = 8'h00;
+							Green = 8'h00;
+							Blue = 8'h00;
+						end
+						else begin
+							Red = 8'hff;
+							Green = 8'hff;
+							Blue = 8'hff;
+						end
+					end
+					else begin
 				 		if ( (is_duck && ~is_dog) &&  duck_color != 24'hF442EE) begin
 				         Red = duck_color[23:16];
 				         Green = duck_color[15:8];
@@ -98,8 +113,8 @@ module  color_mapper (
 				            Green = 8'h00;
 				            Blue = 8'hf0;
 									end
-
-				        end
+							end
+				     end
 			//---------------------------------------------------------------------------------------------------
 						end
 		else if(state == 3'b011) begin
