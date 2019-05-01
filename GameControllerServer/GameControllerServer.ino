@@ -245,10 +245,10 @@ void mpu_loop()
      * Currently, the Y is calculated using the roll
      * There are some boundary conditions set for if the cursor goes out of the egde
     */
-    x = yaw*8+256;
+    x = yaw*4+160;
     y = roll*8+240;
-    if(x > 512){
-      x = 512;
+    if(x > 320){
+      x = 320;
     }
     if(x < 0){
       x = 0;

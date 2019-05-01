@@ -8,19 +8,19 @@ String values="";
 int x_coord, y_coord, trigger;
 
 /*Pin 1 is TX, and Pin 3 is RX, and Pin 17 is ADC*/
-int Pins[] = {4, 5, 2, 16, 0, 15, 13, 12, 14, 1, 3, 17};
-int x[10];
-int y[10];
+int Pins[] = {4, 5, 2, 16, 0, 15, 13, 12, 14, 1, 3};
+int x[9];
+int y[9];
 int isX;
 
-void toBin(int num, char ar){
+void toBin(unsigned int num, char ar){
   if(ar == 'x'){
-    for(int i=0; i<10; i++){
+    for(int i=0; i<9; i++){
       x[i] = bitRead(num, i);
     }
   }
   else{
-    for(int i=0; i<10; i++){
+    for(int i=0; i<9; i++){
       y[i] = bitRead(num, i);
     } 
   }
@@ -61,10 +61,10 @@ void setup()
   trigger = 0;
   isX = 1;
 
-  for(int i =0; i < 12; i++){
+  for(int i =0; i < 11; i++){
       pinMode(Pins[i], OUTPUT);
     }
-  for(int i = 0; i < 10; i++){
+  for(int i = 0; i < 9; i++){
       x[i] = 0;
       y[i] = 0;
     }
@@ -79,31 +79,31 @@ void loop() {
   values = c.readStringUntil('\r');
 
   /* Parsing the data to integers */ 
-  x_coord = (values.substring(0,2)).toInt();
-  y_coord = (values.substring(3,5)).toInt();
+  x_coord = (values.substring(0,3)).toInt();
+  y_coord = (values.substring(3,6)).toInt();
   trigger = (values.substring(6)).toInt();
-
-  /* Convert the data into binary and place into respective arrays */
+  
+   /* Convert the data into binary and place into respective arrays */
   toBin(x_coord, 'x');
   toBin(y_coord, 'y');
 
   /* Depending on the value put in last, load the x or y coordinates into the pins */
   if(isX){
-    for(int i = 0; i< 10; i++){
+    for(int i = 0; i< 9; i++){
       digitalWrite(Pins[i], x[i]);
     }
   isX = 0;
   }
   else{
-    for(int i = 0; i< 10; i++){
-      digitalWrite(Pins[i], x[i]);
+    for(int i = 0; i< 9; i++){
+      digitalWrite(Pins[i], y[i]);
     }
   isX = 1;    
   }
 
   /* Write Trigger Pin */  
-  digitalWrite(Pins[10], trigger);
-  digitalWrite(Pins[11], isX);
+  digitalWrite(Pins[9], trigger);
+  digitalWrite(Pins[10], isX);
   //Serial.println(values);
   
   c.stop();
