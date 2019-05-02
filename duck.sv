@@ -1,7 +1,7 @@
 module  duck( input          Clk,                // 50 MHz clock
                              Reset,              // Active-high reset signal
                              frame_clk,          // The clock indicating a new frame (~60Hz)
-               input         shot, new_round,
+               input         new_round,
 					     input [2:0]	 state,
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_duck,             // Whether current pixel belongs to Duck or background
@@ -11,11 +11,17 @@ module  duck( input          Clk,                // 50 MHz clock
                output logic [15:0] duck_addr
               );
 
+logic [31:0] seed;
 logic [9:0] Duck_X_Pos, Duck_X_Motion, Duck_Y_Pos, Duck_Y_Motion, Duck_Y_Random;
 logic [9:0] Duck_X_Pos_in, Duck_X_Motion_in, Duck_Y_Pos_in, Duck_Y_Motion_in;
 logic [2:0] which_duck, which_duck_in;
 int counter, counter_in, facing, facing_in, counter2, counter2_in, counter3, counter3_in, counter4, counter4_in, count4_cmp;
 logic new_duck, new_duck_in, releasey, releasey_in;
+
+// counter switches between the 3 flapping duck sprites to create the flapping duck animaiton
+// counter2 switches between the left and right ded duck
+// counter3 is used to change the boundaries on the duck
+// counter4 decides when to release the upper boundary on the duck.
 
 logic [9:0] Duck_X_Start = 10'd500;  // Center position on the X axis
 logic [9:0] Duck_Y_Start = 10'd245;  // Center position on the Y axis
@@ -33,22 +39,25 @@ logic [9:0] Sprite_X_Size = 10'd320;        // Sprite X size
 assign duck_x = Duck_X_Pos;
 assign duck_y = Duck_Y_Pos;
 
-random duckXMax(.Clk(new_duck), .Reset(Reset), .seed(32'd789),
-.max(32'd640), .min(32'd320), .data(Duck_X_Max));
+random seed_generator(.Clk(new_duck), .Reset(Reset), .seed(32'd7898789),
+.max(32'd4294967295), .min(32'd0), .data(seed));
 
-random duckXMin(.Clk(new_duck), .Reset(Reset), .seed(32'd433),
+random duckXMax(.Clk(new_duck), .Reset(Reset), .seed(32'd789 & seed),
+.max(32'd639), .min(32'd320), .data(Duck_X_Max));
+
+random duckXMin(.Clk(new_duck), .Reset(Reset), .seed(32'd433 & seed),
 .max(32'd170), .min(32'd40), .data(Duck_X_Min));
 
-random duckYMin(.Clk(new_duck), .Reset(Reset), .seed(32'd789),
-.max(32'd100), .min(32'd1), .data(Duck_Y_Random));
+random duckYMin(.Clk(new_duck), .Reset(Reset), .seed(32'd789 & seed),
+.max(32'd100), .min(32'd2), .data(Duck_Y_Random));
 
-random duckXspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd7523),
-.max(32'd5), .min(32'd1), .data(Duck_X_Step));
+random duckXspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd7523 & seed),
+.max(32'd4), .min(32'd1), .data(Duck_X_Step));
 
-random duckYspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd3123),
-.max(32'd5), .min(32'd1), .data(Duck_Y_Step));
+random duckYspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd3123 & seed),
+.max(32'd4), .min(32'd1), .data(Duck_Y_Step));
 
-random duckYrelease(.Clk(new_round), .Reset(Reset), .seed(32'd843423),
+random duckYrelease(.Clk(new_round), .Reset(Reset), .seed(32'd843423 & seed),
 .max(32'd700), .min(32'd250), .data(count4_cmp));
 
 mux2_1 duckypicker(.s(releasey), .c0(Duck_Y_Random), .c1(32'd1), .out(Duck_Y_Min));
@@ -93,6 +102,20 @@ begin
       new_duck <= new_duck_in;
       releasey <= releasey_in;
     end
+    else if(state == 3'b010) begin
+      Duck_X_Pos <= Duck_X_Pos_in;
+      Duck_Y_Pos <= Duck_Y_Pos_in;
+      Duck_X_Motion <= Duck_X_Motion_in;
+      Duck_Y_Motion <= Duck_Y_Motion_in;
+      which_duck <= which_duck_in;
+      counter <= counter_in;
+      counter2 <= 10'd0;
+      counter3 <= counter3_in;
+      counter4 <= counter4_in;
+      facing <= facing_in;
+      new_duck <= new_duck_in;
+      releasey <= releasey_in;
+    end
     else
     begin
         Duck_X_Pos <= Duck_X_Pos_in;
@@ -127,6 +150,7 @@ begin
     facing_in = facing;
     flew_away = 1'b0;
     duck_ded_done = 1'b0;
+
     // Update position, motion, and duck frame only at rising edge of frame clock
     if (frame_clk_rising_edge && state == 3'b010)
       begin
@@ -159,7 +183,7 @@ begin
               else
                 which_duck_in = which_duck;
           // ---------------------------------------------------------------------------
-          // this decides when to releasethe upper boundary on the duck. if the counter is lower than the compare value, dont release.
+          // this decides when to release the upper boundary on the duck. if the counter is lower than the compare value, dont release.
             if(counter4_in >= count4_cmp) begin
               releasey_in = 1'b1;
             end
@@ -192,6 +216,9 @@ begin
                     Duck_Y_Motion_in = Duck_Y_Step;
 
                 end
+              // if(shot && ~flew_away) begin
+              //   bird_shot = 1'b1;
+              // end
           end
         // ---------------------------------------------------------------------------
         // Update the duck's position with its motion
@@ -262,19 +289,27 @@ always_comb begin
 		end
 end
 
-// spriteROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_index));
-// paletteROM palette(.Clk(Clk), .read_address(duck_index), .data_Out(duck_color));
 
-// duckyROM ducky(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_color));
-
+// always_comb begin
+//
+//     if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size))
+//       is_duck = 1'b1;
+//     else
+//       is_duck = 1'b0;
+//
+// end
+int DistXi, DistYi, Sizei;
+assign DistXi = DrawX - Duck_X_Pos;
+assign DistYi = DrawY - Duck_Y_Pos;
+assign Sizei = 10'd32;
 always_comb begin
-
-    if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size))
-      is_duck = 1'b1;
+    if ( ( DistXi*DistXi + DistYi*DistYi) <= (Sizei*Sizei) )
+        is_duck = 1'b1;
     else
-      is_duck = 1'b0;
-
+        is_duck = 1'b0;
+    /* The ball's (pixelated) circle is generated using the standard circle formula.  Note that while
+       the single line is quite powerful descriptively, it causes the synthesis tool to use up three
+       of the 12 available multipliers on the chip! */
 end
-
 
 endmodule

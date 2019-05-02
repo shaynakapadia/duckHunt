@@ -4,12 +4,11 @@ module score_display( input       Clk,                // 50 MHz clock
 					     input [2:0]	 state,
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                input [31:0]  score,
-               output logic [31:0] index1, index2, index3, index4,
                output logic  is_score,             // Whether current pixel belongs to Num or background
                output logic [11:0] score_addr
                );
 
-logic [31:0] index5, index6, index7, index8, index9;
+logic [31:0] index1, index2, index3, index4, index5, index6, index7, index8, index9;
 
 logic [9:0] Num_X_Pos = 10'd480;
 logic [9:0] Num_Y_Pos = 10'd417;
