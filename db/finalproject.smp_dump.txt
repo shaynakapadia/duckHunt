@@ -1,0 +1,10 @@
+
+State Machine - |toplevel|control:gamecontroller|State
+Name State.Done State.P3 State.P2_2 State.P2_1 State.P2 State.P1 State.Start 
+State.Start 0 0 0 0 0 0 0 
+State.P1 0 0 0 0 0 1 1 
+State.P2 0 0 0 0 1 0 1 
+State.P2_1 0 0 0 1 0 0 1 
+State.P2_2 0 0 1 0 0 0 1 
+State.P3 0 1 0 0 0 0 1 
+State.Done 1 0 0 0 0 0 1 

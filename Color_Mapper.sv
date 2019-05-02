@@ -20,7 +20,7 @@ module  color_mapper (
 								input 					is_dog,
 								input 					is_score,
 								input 					is_cursor,
-								input 					shot,
+								input 					shot, num_shots, bird_shot,
 								input 			 [2:0] state,
 							  input        [9:0] DrawX, DrawY,       // Current pixel coordinates
 						    input        [15:0] duck_addr,
@@ -38,17 +38,18 @@ module  color_mapper (
     assign VGA_R = Red;
     assign VGA_G = Green;
     assign VGA_B = Blue;
+		assign duck_color = 24'h00ffff;
+		assign dog_color  = 24'h0000ff;
 
-		//assign is_what = {is_duck, is_dog};
 
-		dogROM dog(.Clk(Clk), .read_address(dog_addr), .data_Out(dog_index));
-		duckROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_index));
+		// dogROM dog(.Clk(Clk), .read_address(dog_addr), .data_Out(dog_index));
+		// duckROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_index));
 		numbersROM nums(.Clk(Clk), .read_address(score_addr), .data_Out(score_index));
 
 		//mux2_1 indexMUX( .s(is_what), .c0(dog_index), .c1(duck_index), .out(index));
 
-		paletteROM dogPalette(.Clk(Clk), .read_address(dog_index), .data_Out(dog_color));
-		paletteROM duckPalette(.Clk(Clk), .read_address(duck_index), .data_Out(duck_color));
+		// paletteROM dogPalette(.Clk(Clk), .read_address(dog_index), .data_Out(dog_color));
+		// paletteROM duckPalette(.Clk(Clk), .read_address(duck_index), .data_Out(duck_color));
 		paletteROM numsPalette(.Clk(Clk), .read_address(score_index), .data_Out(score_color));
     // Assign color based on is_ball signal
     always_comb begin
@@ -61,7 +62,12 @@ module  color_mapper (
 				//---------------------------------------------------------------------------------------------------
 					// state GAME
 					if(is_cursor) begin
-						if(shot) begin
+						if(bird_shot) begin
+							Red = 8'h00;
+							Green = 8'hff;
+							Blue = 8'h00;
+						end
+						if(shot && num_shots <= 3) begin
 							Red = 8'h00;
 							Green = 8'h00;
 							Blue = 8'h00;

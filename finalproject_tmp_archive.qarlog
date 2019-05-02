@@ -1,0 +1,57 @@
+Quartus Prime Archive log --	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/finalproject_tmp_archive.qarlog
+
+Archive:	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/finalproject_tmp_archive.qar
+Date:		Wed May 01 16:35:28 2019
+Quartus Prime		18.0.0 Build 614 04/24/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/Color_Mapper.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/DE2_115.qsf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/Reg_32.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/VGA_controller.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/background.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/backgroundROM.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/ball.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/birdKeeper.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/control.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/cursor.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/dmux.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/dog.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/dog.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/dogROM.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/duck.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/duck.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/duckROM.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/finalproject.qpf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/finalproject.qsf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/getCoordinates.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/get_index.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/grass.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/grass_transparent.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/hexdriver.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/lab9.qsf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/mux.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/numbers.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/numbersROM.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/palette.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/palette.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/random.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/scoreKeeper.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/score_display.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/shotKeeper.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/start_screen.txt
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/startscreenROM.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/testbench.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/toplevel.sv
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/vga_clk.v
+c:/intelfpga_lite/18.0/quartus/bin64/assignment_defaults.qdf
+	======= Total: 40 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
+
+
+******* Archived project restoration attempt on Wed May 01 16:35:32 2019
+Source archive file:	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/finalproject_tmp_archive.qar
+Archive was extracted into	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/Doggo/
+		 - successfully.
