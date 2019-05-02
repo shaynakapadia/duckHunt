@@ -20,19 +20,21 @@ module  color_mapper (
 								input 					is_dog,
 								input 					is_score,
 								input 					is_cursor,
+								input 					is_grass,
 								input 					shot,
 								input 			 [2:0] state,
 							  input        [9:0] DrawX, DrawY,       // Current pixel coordinates
 						    input        [15:0] duck_addr,
 								input 			 [13:0] dog_addr,
 								input 			 [11:0] score_addr,
+								input 			 [17:0] grass_addr,
 							  output logic [7:0] VGA_R, VGA_G, VGA_B // VGA RGB output
                      );
 
 	 logic is_background;
 	 logic [7:0] Red, Green, Blue;
-	 logic [3:0] index, duck_index, dog_index, score_index;
-	 logic [23:0] color, dog_color, duck_color, score_color;
+	 logic [3:0] index, duck_index, dog_index, score_index, grass_index;
+	 logic [23:0] color, dog_color, duck_color, score_color, grass_color;
 	 // logic [1:0] is_what;
     // Output colors to VGA
     assign VGA_R = Red;
@@ -44,12 +46,13 @@ module  color_mapper (
 		dogROM dog(.Clk(Clk), .read_address(dog_addr), .data_Out(dog_index));
 		duckROM duck(.Clk(Clk), .read_address(duck_addr), .data_Out(duck_index));
 		numbersROM nums(.Clk(Clk), .read_address(score_addr), .data_Out(score_index));
-
+		grassROM grass(.Clk(Clk), .read_address(grass_addr), .data_Out(grass_index));
 		//mux2_1 indexMUX( .s(is_what), .c0(dog_index), .c1(duck_index), .out(index));
 
 		paletteROM dogPalette(.Clk(Clk), .read_address(dog_index), .data_Out(dog_color));
 		paletteROM duckPalette(.Clk(Clk), .read_address(duck_index), .data_Out(duck_color));
 		paletteROM numsPalette(.Clk(Clk), .read_address(score_index), .data_Out(score_color));
+		paletteROM grassPalette(.Clk(Clk), .read_address(grass_index), .data_Out(grass_color));
     // Assign color based on is_ball signal
     always_comb begin
 			if(state == 3'b000) begin
@@ -71,6 +74,11 @@ module  color_mapper (
 							Green = 8'hff;
 							Blue = 8'hff;
 						end
+					end
+					else if(is_grass) begin
+						Red = grass_color[23:16];
+						Green = grass_color[15:8];
+						Blue = grass_color[7:0];
 					end
 					else begin
 				 		if ( (is_duck && ~is_dog) &&  duck_color != 24'hF442EE) begin
