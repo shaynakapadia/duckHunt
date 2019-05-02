@@ -1,3 +1,4 @@
+
 module toplevel( input               CLOCK_50,
                  input        [3:0]  KEY,          //bit 0 is set up as Reset
                  input [35:0] GPIO,
@@ -20,7 +21,7 @@ module toplevel( input               CLOCK_50,
                     );
 
    logic Reset_h, Clk, Button1_h, Button2_h, Button3_h;
-   logic is_duck, is_dog, is_score, is_cursor, is_grass;
+   logic is_duck, is_dog, is_score, is_cursor;
    logic flew_away, bird_shot;
    logic no_shots_left, no_birds_left;
    logic shot;
@@ -32,7 +33,6 @@ module toplevel( input               CLOCK_50,
    logic [9:0] DrawX, DrawY;
    logic [15:0] duck_addr;
    logic [13:0] dog_addr;
-   logic [17:0] grass_addr;
    logic [11:0] score_addr;
    logic [31:0] index1, index2, index3, index4;
    logic [8:0] cursor_x, cursor_y;
@@ -71,9 +71,6 @@ module toplevel( input               CLOCK_50,
     dog dog_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS),
     .DrawX(DrawX), .DrawY(DrawY), .is_dog(is_dog), .dog_addr(dog_addr));
 
-    grass grass_instance(.Clk(Clk), .Reset(Reset_h), .frame_clk(VGA_VS),
-    .DrawX(DrawX), .DrawY(DrawY), .is_grass(is_grass), .grass_addr(grass_addr));
-
     score_display score_instance(.*, .Clk(Clk), .Reset(Reset), .frame_clk(frame_clk), .state(state), .DrawX(DrawX),
      .DrawY(DrawY), .score(score), .is_score(is_score), .score_addr(score_addr));
 
@@ -81,7 +78,7 @@ module toplevel( input               CLOCK_50,
     .DrawX(DrawX), .DrawY(DrawY), .x(x), .y(y), .duck_x(duck_x), .duck_y(duck_y), .bird_shot(bird_shot), .is_cursor(is_cursor));
 
     getCoordinates coords(.Clk(Clk), .GPIO(GPIO), .shot(shot), .cursor_y(cursor_y), .cursor_x(cursor_x));
-
+    
     // Use PLL to generate the 25MHZ VGA_CLK.
     vga_clk vga_clk_instance(.inclk0(Clk), .c0(VGA_CLK));
 

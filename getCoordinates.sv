@@ -1,20 +1,20 @@
 module getCoordinates(
-  input clk,
+  input Clk,
   input [35:0] GPIO,
-  output [10:0] cursor_x,
-  output [10:0] cursor_y,
+  output [8:0] cursor_x,
+  output [8:0] cursor_y,
   output shot
   );
-  always @(posedge clk)
+  always @(posedge Clk)
     begin
-      shot = GPIO[9];
+      shot = ~GPIO[9];
     end
-  always @(posedge GPIO[10])
+  always @(negedge GPIO[10])
     begin
-      cursor_x = GPIO[8:0]
+      cursor_x = GPIO[8:0];
     end
-  always @ (negedge GPIO[10])
+  always @ (posedge GPIO[10])
    begin
-     cursor_y = GPIO[8:0]
+     cursor_y = GPIO[8:0];
    end
 endmodule

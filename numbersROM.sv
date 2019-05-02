@@ -1,12 +1,12 @@
 
-module  numberROM(
+module  numbersROM(
 									input [11:0] read_address,
 									input Clk,
 									output logic [3:0] data_Out
 );
 
-// mem has width of 4 bits and a total of 2,560 addresses (needs 11 bits to address)
-logic [3:0] mem [0:2559];
+// mem has width of 4 bits and a total of 2,080 addresses (needs 11 bits to address)
+logic [3:0] mem [0:2079];
 
 initial
 begin

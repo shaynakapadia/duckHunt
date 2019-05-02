@@ -1,6 +1,6 @@
 module birdKeeper(
                     input flew_away, Clk, Reset,
-                    input [1:0] state,
+                    input [2:0] state,
                     output logic no_birds_left,
                     output logic [31:0] num_birds
 );

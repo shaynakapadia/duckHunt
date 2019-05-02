@@ -1,6 +1,6 @@
 module scoreKeeper(
                     input bird_shot, Clk, Reset,
-                    input [1:0] state,
+                    input [2:0] state,
                     output logic [31:0] score
 );
 
