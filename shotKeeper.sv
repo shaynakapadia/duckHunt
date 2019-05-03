@@ -21,11 +21,11 @@ assign num_shots = Data_Out;
 assign D = Data_Out + 32'd1;
 
 always_comb begin
-  if(shot_edge && (Data_Out < 32'd100))
+  if(shot_edge && (Data_Out < 32'd6))
     Load = 1'b1;
   else
     Load = 1'b0;
-  if(Data_Out >= 32'd100)
+  if(Data_Out >= 32'd6)
     no_shots_left = 1'b1;
   else
     no_shots_left = 1'b0;

@@ -3,35 +3,35 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'duck:duck_instance|new_duck'
-Slack : -126.577
-TNS   : -19265.090
+Slack : -129.441
+TNS   : -19298.044
 
 Type  : Slow 1200mV 85C Model Setup 'control:gamecontroller|State.P1'
-Slack : -106.374
-TNS   : -3367.128
+Slack : -109.393
+TNS   : -3463.263
 
 Type  : Slow 1200mV 85C Model Setup 'CLOCK_50'
-Slack : -67.469
-TNS   : -672.565
+Slack : -69.780
+TNS   : -400.160
 
 Type  : Slow 1200mV 85C Model Setup 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 12.199
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.386
+Slack : 11.064
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'CLOCK_50'
+Slack : 0.384
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
 Slack : 0.402
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'duck:duck_instance|new_duck'
-Slack : 0.406
+Slack : 0.403
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'control:gamecontroller|State.P1'
-Slack : 0.410
+Slack : 0.407
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'GPIO[10]'
@@ -47,39 +47,39 @@ Slack : -1.285
 TNS   : -41.120
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.555
+Slack : 9.592
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 19.706
+Slack : 19.708
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Setup 'duck:duck_instance|new_duck'
-Slack : -114.272
-TNS   : -17385.372
+Slack : -116.976
+TNS   : -17405.011
 
 Type  : Slow 1200mV 0C Model Setup 'control:gamecontroller|State.P1'
-Slack : -95.683
-TNS   : -3029.097
+Slack : -98.669
+TNS   : -3124.207
 
 Type  : Slow 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -59.295
-TNS   : -594.638
+Slack : -61.378
+TNS   : -357.155
 
 Type  : Slow 1200mV 0C Model Setup 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 12.998
-TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.339
+Slack : 12.010
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.354
+Slack : 0.338
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'duck:duck_instance|new_duck'
-Slack : 0.355
+Slack : 0.353
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.354
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'control:gamecontroller|State.P1'
@@ -99,48 +99,48 @@ Slack : -1.285
 TNS   : -41.120
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.562
+Slack : 9.609
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 19.694
+Slack : 19.710
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Setup 'duck:duck_instance|new_duck'
-Slack : -62.453
-TNS   : -9500.391
+Slack : -64.055
+TNS   : -9519.215
 
 Type  : Fast 1200mV 0C Model Setup 'control:gamecontroller|State.P1'
-Slack : -52.385
-TNS   : -1657.368
+Slack : -54.276
+TNS   : -1717.075
 
 Type  : Fast 1200mV 0C Model Setup 'CLOCK_50'
-Slack : -22.840
-TNS   : -253.203
+Slack : -24.083
+TNS   : -151.784
 
 Type  : Fast 1200mV 0C Model Setup 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 15.715
+Slack : 15.086
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'CLOCK_50'
-Slack : 0.145
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
-Slack : 0.174
+Slack : 0.100
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'duck:duck_instance|new_duck'
-Slack : 0.183
+Slack : 0.181
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'
+Slack : 0.182
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'control:gamecontroller|State.P1'
-Slack : 0.189
+Slack : 0.187
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'GPIO[10]'
 Slack : -3.000
-TNS   : -27.765
+TNS   : -29.251
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'duck:duck_instance|new_duck'
 Slack : -1.000
@@ -151,7 +151,7 @@ Slack : -1.000
 TNS   : -32.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'CLOCK_50'
-Slack : 9.201
+Slack : 9.240
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'vga_clk_instance|altpll_component|auto_generated|pll1|clk[0]'

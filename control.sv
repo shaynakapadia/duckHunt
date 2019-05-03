@@ -13,13 +13,15 @@ module control (
     input  logic game_over,
     input  logic bird_shot,
     input  logic duck_ded_done,
+    input  logic dog_start,
+    input  logic dog_duck,
     output logic new_round,
     output logic reset_shots,
     output logic reset_score,
     output logic reset_birds,
     output logic [2:0] state
 );
-enum logic [3:0] { Start, P1, P2, P2_1, P2_2, P2_3, P3, Done } State, Next_State;
+enum logic [3:0] { Start, P1, P1_1, P2, P2_1, P2_2, P2_2_1, P2_3, P3, Done } State, Next_State;
 
 always_ff @ (posedge Clk)
   begin
@@ -49,7 +51,14 @@ begin
           else
             Next_State = Start;
         end
-      P1: Next_State = P2;
+      P1: Next_State = P1_1;
+      P1_1:
+        begin
+          if(dog_start)
+            Next_State = P2;
+          else
+            Next_State = P1_1;
+        end
       P2:
         begin
           if(no_shots_left)
@@ -71,10 +80,15 @@ begin
       P2_2:
       begin
         if(duck_ded_done)
-          Next_State = P3;
+          Next_State = P2_3;
         else
           Next_State = P2_2;
       end
+      P2_3:
+        if(dog_duck)
+          Next_State = P3;
+        else
+          Next_State = P2_3;
       P3:
       begin
         if(game_over)
@@ -107,6 +121,10 @@ begin
           state = 3'b001;
           new_round = 1'b1;
         end
+      P1_1:
+        begin
+          state = 3'b110;
+        end
       P2:
         begin
           state = 3'b010;
@@ -118,6 +136,10 @@ begin
       P2_2:
         begin
           state = 3'b100;
+        end
+      P2_2:
+        begin
+          state = 3'b101;
         end
       P3:
         begin
