@@ -1,0 +1,97 @@
+Quartus Prime Archive log --	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/__lab9.auto.qarlog
+
+Archive:	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/__lab9.auto.qar
+Date:		Wed May 01 16:35:26 2019
+Quartus Prime		18.0.0 Build 614 04/24/2018 SJ Lite Edition
+
+	=========== Files Selected: ===========
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/abs_divider_0dg.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/add_sub_7pc.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/add_sub_8pc.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_0af.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_47f.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_6af.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_7af.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_8af.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_a7f.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_caf.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_eaf.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_u9f.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_an71.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_nd71.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_os71.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/decode_h8a.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.cbx.xml
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.qpf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_dogROM_db368477.hdl.mif
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_duckROM_f7ffaf49.hdl.mif
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_numbersROM_58a9a50f.hdl.mif
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_paletteROM_a7b1ed97.hdl.mif
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_abs_e0a.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_abs_i0a.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_0jm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_3bm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_3jm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_8qo.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_dkm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_ekm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_hkm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_ikm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_kcm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_kkm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_lkm.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_8ft.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_aft.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_p5t.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mux_4nb.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_5nh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_6nh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_9nh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_anh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_bnh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_cnh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_dnh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_olh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_rlh.tdf
+C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/vga_clk_altpll.v
+Color_Mapper.sv
+Reg_32.sv
+VGA_controller.sv
+background.txt
+backgroundROM.sv
+ball.sv
+birdKeeper.sv
+c:/intelfpga_lite/18.0/quartus/bin64/assignment_defaults.qdf
+control.sv
+cursor.sv
+dmux.sv
+dog.sv
+dog.txt
+dogROM.sv
+duck.sv
+duck.txt
+duckROM.sv
+getCoordinates.sv
+get_index.sv
+grass.txt
+grass_transparent.txt
+hexdriver.sv
+lab9.qsf
+mux.sv
+numbers.txt
+numbersROM.sv
+palette.sv
+palette.txt
+random.sv
+scoreKeeper.sv
+score_display.sv
+shotKeeper.sv
+start_screen.txt
+startscreenROM.sv
+testbench.sv
+toplevel.sv
+vga_clk.v
+	======= Total: 86 files to archive =======
+
+	================ Status: ===============
+All files archived successfully.
