@@ -47,15 +47,15 @@ begin
       Start:
         begin
           if(start)
-            Next_State = P1;
+            Next_State = P1_1;
           else
             Next_State = Start;
         end
-      P1: Next_State = P1_1;
+      P1: Next_State = P2;
       P1_1:
         begin
           if(dog_start)
-            Next_State = P2;
+            Next_State = P1;
           else
             Next_State = P1_1;
         end
@@ -116,15 +116,16 @@ begin
           reset_score = 1'b1;
           reset_birds = 1'b1;
         end
+      P1_1:
+        begin
+          state = 3'b110;
+        end
       P1:
         begin
           state = 3'b001;
           new_round = 1'b1;
         end
-      P1_1:
-        begin
-          state = 3'b110;
-        end
+
       P2:
         begin
           state = 3'b010;
@@ -137,7 +138,7 @@ begin
         begin
           state = 3'b100;
         end
-      P2_2:
+      P2_3:
         begin
           state = 3'b101;
         end
