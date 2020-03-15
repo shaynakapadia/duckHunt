@@ -1,4 +1,4 @@
-module mux2_1 // nine to one mux
+module mux2_1 // two to one mux
 	(
 						input s,
 						input [31:0] c0,

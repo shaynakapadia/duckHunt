@@ -78,7 +78,7 @@ module  cursor(input         Clk,                // 50 MHz clock
         if (frame_clk_rising_edge )
         begin
           if(shot && state == 3'b010) begin
-            if( ( (RangeX <= 100) && (RangeX >= -100) ) && ( (RangeY <= 100) && (RangeY >= -100) ) )begin
+            if( ( (RangeX <= 32) && (RangeX >= -32) ) && ( (RangeY <= 32) && (RangeY >= -32) ) )begin
               bird_shot = 1'b1;
             end
           end

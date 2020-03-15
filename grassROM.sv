@@ -1,15 +1,15 @@
 module  grassROM(
-									input [17:0] read_address,
+									input [16:0] read_address,
 									input Clk,
 									output logic [3:0] data_Out
 );
 
-// mem has width of 4 bits and a total of 40,960 addresses (needs 16 bits to address)
-logic [3:0] mem [0:149759];
+// mem has width of 4 bits and a total of 76,800 addresses (needs 16 bits to address)
+logic [3:0] mem [0:76799];
 
 initial
 begin
-	 $readmemh("grass_transparent.txt", mem);
+	 $readmemh("grass.txt", mem);
 end
 
 

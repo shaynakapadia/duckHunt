@@ -23,7 +23,7 @@ logic new_duck, new_duck_in, releasey, releasey_in;
 // counter3 is used to change the boundaries on the duck
 // counter4 decides when to release the upper boundary on the duck.
 
-logic [9:0] Duck_X_Start = 10'd500;  // Center position on the X axis
+logic [9:0] Duck_X_Start;  // Center position on the X axis
 logic [9:0] Duck_Y_Start = 10'd245;  // Center position on the Y axis
 logic [9:0] Duck_X_Min;       // Leftmost point on the X axis
 logic [9:0] Duck_X_Max;     // Rightmost point on the X axis
@@ -42,6 +42,9 @@ assign duck_y = Duck_Y_Pos;
 random seed_generator(.Clk(new_duck), .Reset(Reset), .seed(32'd7898789),
 .max(32'd4294967295), .min(32'd0), .data(seed));
 
+random duckXStart(.Clk(new_round), .Reset(Reset), .seed(32'd945589483 & seed),
+.max(32'd640), .min(32'd5), .data(Duck_X_Start));
+
 random duckXMax(.Clk(new_duck), .Reset(Reset), .seed(32'd789 & seed),
 .max(32'd639), .min(32'd320), .data(Duck_X_Max));
 
@@ -52,10 +55,10 @@ random duckYMin(.Clk(new_duck), .Reset(Reset), .seed(32'd789 & seed),
 .max(32'd100), .min(32'd2), .data(Duck_Y_Random));
 
 random duckXspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd7523 & seed),
-.max(32'd4), .min(32'd1), .data(Duck_X_Step));
+.max(32'd10), .min(32'd1), .data(Duck_X_Step));
 
 random duckYspeed(.Clk(new_duck), .Reset(Reset), .seed(32'd3123 & seed),
-.max(32'd4), .min(32'd1), .data(Duck_Y_Step));
+.max(32'd10), .min(32'd1), .data(Duck_Y_Step));
 
 random duckYrelease(.Clk(new_round), .Reset(Reset), .seed(32'd843423 & seed),
 .max(32'd700), .min(32'd250), .data(count4_cmp));
@@ -212,8 +215,10 @@ begin
                     flew_away = 1'b1;
                     Duck_Y_Motion_in = 10'd0;
                   end
-                  else
+                  else begin
                     Duck_Y_Motion_in = Duck_Y_Step;
+                  end
+
 
                 end
               // if(shot && ~flew_away) begin
@@ -290,26 +295,36 @@ always_comb begin
 end
 
 
-// always_comb begin
-//
-//     if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size))
-//       is_duck = 1'b1;
-//     else
-//       is_duck = 1'b0;
-//
-// end
-int DistXi, DistYi, Sizei;
-assign DistXi = DrawX - Duck_X_Pos;
-assign DistYi = DrawY - Duck_Y_Pos;
-assign Sizei = 10'd32;
 always_comb begin
-    if ( ( DistXi*DistXi + DistYi*DistYi) <= (Sizei*Sizei) )
-        is_duck = 1'b1;
+  if( (state == 3'b010) || (state == 3'b100) || (state == 3'b001) ) begin
+    if ((DistX < Duck_X_Size) && (DistY < Duck_Y_Size))
+      is_duck = 1'b1;
     else
-        is_duck = 1'b0;
-    /* The ball's (pixelated) circle is generated using the standard circle formula.  Note that while
-       the single line is quite powerful descriptively, it causes the synthesis tool to use up three
-       of the 12 available multipliers on the chip! */
+      is_duck = 1'b0;
+  end
+  else begin
+    is_duck = 1'b0;
+  end
+
+
 end
+// int DistXi, DistYi, Sizei;
+// assign DistXi = DrawX - Duck_X_Pos;
+// assign DistYi = DrawY - Duck_Y_Pos;
+// assign Sizei = 10'd32;
+// always_comb begin
+//   if(state != 3'b101 || state != 3'b110) begin
+//     if ( ( DistXi*DistXi + DistYi*DistYi) <= (Sizei*Sizei) )
+//         is_duck = 1'b1;
+//     else
+//         is_duck = 1'b0;
+//     end
+//     else begin
+//       is_duck = 1'b0;
+//     end
+//     /* The ball's (pixelated) circle is generated using the standard circle formula.  Note that while
+//        the single line is quite powerful descriptively, it causes the synthesis tool to use up three
+//        of the 12 available multipliers on the chip! */
+// end
 
 endmodule

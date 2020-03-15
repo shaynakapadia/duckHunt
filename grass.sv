@@ -19,7 +19,7 @@ module  grass ( input         Clk,                // 50 MHz clock
                              frame_clk,          // The clock indicating a new frame (~60Hz)
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
                output logic  is_grass,             // Whether current pixel belongs to grass or background
-               output logic [17:0] grass_addr
+               output logic [16:0] grass_addr
               );
 
     parameter [9:0] grass_X_Size = 10'd640;        // grass size
@@ -28,23 +28,23 @@ module  grass ( input         Clk,                // 50 MHz clock
        from logic to int (signed by default) before they are multiplied. */
     int DistX, DistY, Size, addr;
     assign DistX = DrawX - 10'd0;
-    assign DistY = DrawY - 10'd245;
+    assign DistY = DrawY - 10'd240;
     assign Size = grass_X_Size;
 
     assign addr =  (DistY)*(grass_X_Size) + DistX;
 
     always_comb begin
-    	if(addr <= 32'h3ffff)
+    	if(addr <= 32'h1ffff)
     		begin
-    			grass_addr = addr[17:0];
+    			grass_addr = addr[16:0];
     		end
       else if(addr[31] == 1'b1)
         begin
-          grass_addr = 18'h0;
+          grass_addr = 17'h0;
         end
     	else
     		begin
-    			grass_addr = 18'h0;
+    			grass_addr = 17'h0;
     		end
     end
 

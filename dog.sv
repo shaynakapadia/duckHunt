@@ -3,7 +3,7 @@ module  dog( input          Clk,                // 50 MHz clock
                              frame_clk,          // The clock indicating a new frame (~60Hz)
 				    	input [2:0]  state,
                input [9:0]   DrawX, DrawY,       // Current pixel coordinates
-               output logic  is_dog,             // Whether current pixel belongs to Dog or background
+               output logic is_dog,             // Whether current pixel belongs to Dog or background
                output logic dog_start,
                output logic dog_duck,
                output logic [13:0] dog_addr
@@ -15,11 +15,11 @@ logic [1:0] which_dog, which_dog_in;
 int counter, counter_in;
 
 parameter [9:0] Dog_X_Center = 10'd288;  // Center position on the X axis
-parameter [9:0] Dog_Y_Center = 10'd249;  // Center position on the Y axis
+parameter [9:0] Dog_Y_Center = 10'd300;  // Center position on the Y axis
 parameter [9:0] Dog_X_Min = 10'd1;       // Leftmost point on the X axis
 parameter [9:0] Dog_X_Max = 10'd575;     // Rightmost point on the X axis
-parameter [9:0] Dog_Y_Min = 10'd181;       // Topmost point on the Y axis
-parameter [9:0] Dog_Y_Max = 10'd255;     // Bottommost point on the Y axis
+parameter [9:0] Dog_Y_Min = 10'd245;       // Topmost point on the Y axis
+parameter [9:0] Dog_Y_Max = 10'd306;     // Bottommost point on the Y axis
 parameter [9:0] Dog_X_Step = 10'd1;      // Step size on the X axis
 parameter [9:0] Dog_Y_Step = 10'd1;      // Step size on the Y axis
 parameter [9:0] Dog_X_Size = 10'd64;        // Dog X size
@@ -40,11 +40,19 @@ begin
     if (Reset)
     begin
         Dog_X_Pos <= Dog_X_Center;
-        Dog_Y_Pos <= Dog_Y_Center;
+        Dog_Y_Pos <= 10'd300;
         Dog_X_Motion <= 10'd0;
         Dog_Y_Motion <= (~(Dog_Y_Step) + 1'b1);
         which_dog <= 2'b00;
         counter <= 10'd0;
+    end
+    else if(state == 3'b010) begin
+      Dog_X_Pos <= Dog_X_Center;
+      Dog_Y_Pos <= 10'd300;
+      Dog_X_Motion <= 10'd0;
+      Dog_Y_Motion <= (~(Dog_Y_Step) + 1'b1);
+      which_dog <= which_dog;
+      counter <= 10'd0;
     end
     else
     begin
@@ -69,11 +77,26 @@ begin
     dog_duck = 1'b0;
     dog_start = 1'b0;
     // Update position, motion, and dog frame only at rising edge of frame clock
-    if (frame_clk_rising_edge)
+    if (frame_clk_rising_edge && (state == 3'b110))
       begin
-     // ---------------------------------------------------------------------------
      // This code is what sets the motion of the dog and prevents it from going off the screen
-			which_dog_in = 2'b01;
+			which_dog_in = 2'b00;
+
+        if ( Dog_Y_Pos <= Dog_Y_Min )
+          begin
+            Dog_Y_Motion_in = Dog_Y_Step;
+          end
+        else if( Dog_Y_Pos >= Dog_Y_Max )
+           begin
+             Dog_Y_Motion_in = ~(Dog_Y_Step) + 1'b1;
+             dog_start = 1'b1;
+           end
+    // Update the ball's position with its motion
+         Dog_Y_Pos_in = Dog_Y_Pos + Dog_Y_Motion;
+      end
+    else if (frame_clk_rising_edge && (state == 3'b101))
+      begin
+        which_dog_in = 2'b01;
         if ( Dog_Y_Pos <= Dog_Y_Min )
           begin
             Dog_Y_Motion_in = Dog_Y_Step;
@@ -83,26 +106,9 @@ begin
              Dog_Y_Motion_in = ~(Dog_Y_Step) + 1'b1;
              dog_duck = 1'b1;
            end
-    // ---------------------------------------------------------------------------
-    // Update the ball's position with its motion
-         Dog_Y_Pos_in = Dog_Y_Pos + Dog_Y_Motion;
+        // Update the ball's position with its motion
+        Dog_Y_Pos_in = Dog_Y_Pos + Dog_Y_Motion;
       end
-    // else if (frame_clk_rising_edge && (state == 3'b110))
-    //   begin
-    //     which_dog_in = 2'b00;
-    //     if ( Dog_Y_Pos <= Dog_Y_Min )
-    //       begin
-    //         Dog_Y_Motion_in = Dog_Y_Step;
-    //       end
-    //     else if( Dog_Y_Pos >= Dog_Y_Max )
-    //        begin
-    //          Dog_Y_Motion_in = ~(Dog_Y_Step) + 1'b1;
-    //          dog_start = 1'b1;
-    //        end
-    //
-    //     // Update the ball's position with its motion
-    //     Dog_Y_Pos_in = Dog_Y_Pos + Dog_Y_Motion;
-    //   end
 
 end
 
@@ -123,15 +129,15 @@ end
 
 always_comb begin
   //if bird_shot or the state after start state
-  // if (state == 3'b110 || state == 3'b101)
-  //   begin
+  if ((state == 3'b110) || (state == 3'b101))
+    begin
       if ((DistX < Dog_X_Size) && (DistY < Dog_Y_Size))
         is_dog = 1'b1;
       else
         is_dog = 1'b0;
-  //   end
-  // else
-  //     is_dog = 1'b0;
+    end
+  else
+      is_dog = 1'b0;
 
 end
 

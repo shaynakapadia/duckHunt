@@ -1,97 +1,78 @@
-Quartus Prime Archive log --	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/__lab9.auto.qarlog
+Quartus Prime Archive log --	C:/dev/385/finalproject/__lab9.auto.qarlog
 
-Archive:	C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/__lab9.auto.qar
-Date:		Wed May 01 16:35:26 2019
+Archive:	C:/dev/385/finalproject/__lab9.auto.qar
+Date:		Sun Apr 14 17:44:21 2019
 Quartus Prime		18.0.0 Build 614 04/24/2018 SJ Lite Edition
 
 	=========== Files Selected: ===========
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/abs_divider_0dg.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/add_sub_7pc.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/add_sub_8pc.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_0af.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_47f.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_6af.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_7af.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_8af.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_a7f.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_caf.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_eaf.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/alt_u_div_u9f.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_an71.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_nd71.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/altsyncram_os71.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/decode_h8a.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.cbx.xml
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.qpf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_dogROM_db368477.hdl.mif
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_duckROM_f7ffaf49.hdl.mif
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_numbersROM_58a9a50f.hdl.mif
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/finalproject.ram0_paletteROM_a7b1ed97.hdl.mif
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_abs_e0a.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_abs_i0a.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_0jm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_3bm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_3jm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_8qo.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_dkm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_ekm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_hkm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_ikm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_kcm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_kkm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/lpm_divide_lkm.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_8ft.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_aft.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mult_p5t.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/mux_4nb.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_5nh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_6nh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_9nh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_anh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_bnh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_cnh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_dnh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_olh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/sign_div_unsign_rlh.tdf
-C:/Users/Shayna Kapadia/Documents/Documents/School Papers/COLLEGE/Classes/Junior/ECE 385/final/db/vga_clk_altpll.v
+AES_Decryption_Core_hw.tcl
+C:/dev/385/finalproject/DE2_115.qsf
+C:/dev/385/finalproject/db/finalproject.qpf
+C:/dev/385/finalproject/db/lab9.cbx.xml
+C:/dev/385/finalproject/lab9_soc/lab9_soc.cmp
+C:/dev/385/finalproject/lab9_soc/synthesis/lab9_soc.qip
+C:/dev/385/finalproject/lab9_soc/synthesis/lab9_soc.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_avalon_sc_fifo.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_avalon_st_clock_crosser.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.sdc
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_avalon_st_handshake_clock_crosser.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_avalon_st_pipeline_base.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_irq_clock_crosser.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_arbitrator.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_master_agent.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_master_translator.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_slave_agent.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_merlin_slave_translator.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_reset_controller.sdc
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_reset_controller.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_reset_synchronizer.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/altera_std_synchronizer_nocut.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_irq_mapper.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_jtag_uart_0.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_avalon_st_adapter.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_avalon_st_adapter_error_adapter_0.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_cmd_demux.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_cmd_mux.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_router.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_router_002.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_rsp_demux.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_mm_interconnect_0_rsp_mux.sv
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu.sdc
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_debug_slave_sysclk.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_debug_slave_tck.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_debug_slave_wrapper.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_ociram_default_contents.mif
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_rf_ram_a.mif
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_rf_ram_b.mif
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_nios2_gen2_0_cpu_test_bench.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_onchip_memory2_0.hex
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_onchip_memory2_0.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_sdram.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_sdram_pll.v
+C:/dev/385/finalproject/lab9_soc/synthesis/submodules/lab9_soc_sysid_qsys_0.v
+C:/dev/385/finalproject/output_files/lab9.flow.rpt
+C:/dev/385/finalproject/output_files/lab9.map.rpt
+C:/dev/385/finalproject/output_files/lab9.map.smsg
+C:/dev/385/finalproject/output_files/lab9.map.summary
 Color_Mapper.sv
 Reg_32.sv
 VGA_controller.sv
-background.txt
-backgroundROM.sv
+assignment_defaults.qdf
 ball.sv
-birdKeeper.sv
-c:/intelfpga_lite/18.0/quartus/bin64/assignment_defaults.qdf
-control.sv
-cursor.sv
 dmux.sv
-dog.sv
-dog.txt
-dogROM.sv
-duck.sv
-duck.txt
-duckROM.sv
-getCoordinates.sv
-get_index.sv
-grass.txt
-grass_transparent.txt
+font_rom.sv
 hexdriver.sv
+lab8.sv
 lab9.qsf
+lab9.restore.rpt
+lab9_soc.qsys
 mux.sv
-numbers.txt
-numbersROM.sv
-palette.sv
-palette.txt
-random.sv
-scoreKeeper.sv
-score_display.sv
-shotKeeper.sv
-start_screen.txt
-startscreenROM.sv
-testbench.sv
-toplevel.sv
 vga_clk.v
-	======= Total: 86 files to archive =======
+	======= Total: 67 files to archive =======
 
 	================ Status: ===============
 All files archived successfully.
